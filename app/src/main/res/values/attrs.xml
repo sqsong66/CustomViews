@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="WatermarkMaterialView">
+        <attr name="wmv_mode" format="enum">
+            <enum name="mode_icon" value="0" />
+            <enum name="mode_image" value="1" />
+        </attr>
+        <attr name="wmv_icon" format="reference" />
+        <attr name="wmv_image" format="reference" />
+        <attr name="wmv_icon_size" format="dimension" />
+        <attr name="wmv_border_width" format="dimension" />
+        <attr name="wmv_border_dash_gap" format="dimension" />
+        <attr name="wmv_border_color" format="color" />
+        <attr name="wmv_checked_border_color" format="color" />
+        <attr name="wmv_checked_overlay_color" format="color" />
+        <attr name="wmv_bg_image" format="reference" />
+        <attr name="wmv_checked" format="boolean" />
+        <attr name="wmv_radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TurntableView">
+        <attr name="ttv_borderWidth" format="dimension" />
+        <attr name="ttv_bgColor" format="color" />
+        <attr name="ttv_gapWidth" format="dimension" />
+        <attr name="ttv_textSize" format="dimension" />
+        <attr name="ttv_textColor" format="color" />
+        <attr name="ttv_overlayTextColor" format="color" />
+        <attr name="ttv_overlayColor" format="color" />
+        <attr name="ttv_startText" format="string" />
+        <attr name="ttv_startTextSize" format="dimension" />
+        <attr name="ttv_startTextColor" format="color" />
+        <attr name="ttv_startTextPadding" format="dimension" />
+        <attr name="ttv_startTextBorderWidth" format="dimension" />
+        <attr name="ttv_startTextBgColor" format="color" />
+        <attr name="ttv_startTextBgColor1" format="color" />
+        <attr name="ttv_startTextPressedBgColor" format="color" />
+        <attr name="ttv_startTextOutBgColor" format="color" />
+        <attr name="ttv_triangleHypotenuseLength" format="dimension" />
+        <attr name="ttv_triangleVerticalLength" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorPickerView">
+        <attr name="cpv_huePanelStrokeWidth" format="dimension" />
+        <attr name="cpv_hueTrackStrokeWidth" format="dimension" />
+        <attr name="cpv_hueTrackStrokeColor" format="color" />
+        <attr name="cpv_satValStrokeWidth" format="dimension" />
+        <attr name="cpv_satValStrokeColor" format="color" />
+        <attr name="cpv_satValRadius" format="dimension" />
+        <attr name="cpv_hueSatValMargin" format="dimension" />
+        <attr name="cpv_minSatValRectLength" format="dimension" />
+        <attr name="cpv_showAlphaPanel" format="boolean" />
+        <attr name="cpv_alphaPanelGridSize" format="dimension" />
+        <attr name="cpv_hsvAlphaMargin" format="dimension" />
+        <attr name="cpv_alphaTrackColor" format="color" />
+        <attr name="cpv_hsvHorizontalMargin" format="dimension" />
+        <attr name="cpv_alphaProgressTextColor" format="color" />
+        <attr name="cpv_alphaProgressTextSize" format="dimension" />
+        <attr name="cpv_alphaProgressCircleRadius" format="dimension" />
+        <attr name="cpv_alphaProgressCircleTextMargin" format="dimension" />
+        <attr name="cpv_alphaProgressPadding" format="dimension" />
+        <attr name="cpv_alphaProgressBgColor" format="color" />
+        <attr name="cpv_alphaProgressPanelMargin" format="dimension" />
+        <!--是否显示透明度进度圆圈-->
+        <attr name="cpv_showAlphaProgressPanel" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ScalableImageView">
+        <attr name="siv_imageSrc" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="RulerView">
+        <attr name="rv_calibrationWidth" format="dimension" />
+        <attr name="rv_calibrationLength" format="dimension" />
+        <attr name="rv_calibrationColor" format="color" />
+        <attr name="rv_stepCalibrationColor" format="color" />
+        <attr name="rv_indicatorCalibrationWidth" format="dimension" />
+        <attr name="rv_indicatorCalibrationLength" format="dimension" />
+        <attr name="rv_indicatorCalibrationColor" format="color" />
+        <attr name="rv_calibrationTextSize" format="dimension" />
+        <attr name="rv_calibrationTextColor" format="color" />
+        <attr name="rv_indicatorTextGap" format="dimension" />
+        <attr name="rv_minValue" format="float" />
+        <attr name="rv_maxValue" format="float" />
+        <attr name="rv_defaultValue" format="float" />
+        <attr name="rv_calibrationUnit" format="float" />
+        <attr name="rv_numberPerStep" format="integer" />
+        <attr name="rv_calibrationGap" format="dimension" />
+        <attr name="rv_textMargin" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RulerMaskView">
+        <attr name="rmv_maskColor" format="color" />
+        <attr name="rmv_radius" format="dimension" />
+        <attr name="rmv_borderWidth" format="dimension" />
+        <attr name="rmv_borderColor" format="color" />
+        <attr name="rmv_borderGap" format="dimension" />
+        <attr name="rmv_textSize" format="dimension" />
+        <attr name="rmv_textColor" format="color" />
+    </declare-styleable>
+</resources>
