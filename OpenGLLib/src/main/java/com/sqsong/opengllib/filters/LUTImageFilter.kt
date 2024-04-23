@@ -12,7 +12,8 @@ class LUTImageFilter(
     context: Context,
     private val lutBitmap: Bitmap,
     private var intensity: Float = 1.0f,
-) : BaseImageFilter(context, fragmentAssets = "shader/lut_filter_frag.frag") {
+    initOutputBuffer: Boolean = true
+) : BaseImageFilter(context, fragmentAssets = "shader/lut_filter_frag.frag", initOutputBuffer = initOutputBuffer) {
 
     private var lutTexture: Texture? = null
 
@@ -39,7 +40,7 @@ class LUTImageFilter(
         lutTexture?.unbindTexture()
     }
 
-    override fun setProgress(progress: Float) {
+    override fun setProgress(progress: Float, extraType: Int) {
         intensity = progress
     }
 

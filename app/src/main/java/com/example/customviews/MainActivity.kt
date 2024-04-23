@@ -13,6 +13,7 @@ import com.example.customviews.ui.ImageFilter2Activity
 import com.example.customviews.ui.ImageFilterActivity
 import com.example.customviews.ui.LUTFilterActivity
 import com.example.customviews.ui.MosaicActivity
+import com.example.customviews.ui.OpenGLFilterActivity
 import com.example.customviews.ui.OpenGLProcessorActivity
 import com.example.customviews.ui.OpenGLSampleActivity
 import com.example.customviews.ui.RulerSampleActivity
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             result.data?.data?.let {
                 launchActivity(it)
             }
-
         }
     }
 
@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.swapFaceBtn.setOnClickListener(this)
         binding.openGlSampleBtn.setOnClickListener(this)
         binding.rulerBtn.setOnClickListener(this)
+        binding.openGlFilterBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -108,7 +109,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.rulerBtn -> {
-                startActivity(Intent(this, RulerSampleActivity::class.java))
+                startLaunchImageActivity(3)
+            }
+
+            R.id.openGlFilterBtn -> {
+                startLaunchImageActivity(4)
             }
         }
     }
@@ -137,6 +142,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             2 -> {
                 startActivity(Intent(this, OpenGLSampleActivity::class.java).apply {
+                    putExtra("imageUri", uri)
+                })
+            }
+
+            3 -> {
+                startActivity(Intent(this, RulerSampleActivity::class.java).apply {
+                    putExtra("imageUri", uri)
+                })
+            }
+
+            4 -> {
+                startActivity(Intent(this, OpenGLFilterActivity::class.java).apply {
                     putExtra("imageUri", uri)
                 })
             }

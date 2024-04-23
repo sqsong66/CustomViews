@@ -66,6 +66,7 @@ class RulerView @JvmOverloads constructor(
     private var maxFlingVelocity = 0
     private val tempRect = Rect()
     private var currentProgress: Int = 0
+    private var drawCalibrationNumberList = mutableListOf<Int>()
     private var onValueChangeListener: OnValueChangeListener? = null
     private val scroller by lazy {
         OverScroller(context)
@@ -130,6 +131,10 @@ class RulerView @JvmOverloads constructor(
         currentNumber = currentValue.toInt() * 10
         numberUnit = (calibrationUnit * 10).toInt()
         currentProgress = (currentNumber - minNumber) / numberUnit
+
+        for (i in minNumber .. maxNumber step numberUnit) {
+            drawCalibrationNumberList.add(i)
+        }
 
         currentDistance = (currentNumber - minNumber).toFloat() / numberUnit * calibrationGap
         totalDistance = (maxNumber - minNumber).toFloat() / numberUnit * calibrationGap
@@ -256,12 +261,11 @@ class RulerView @JvmOverloads constructor(
         val stopY = startY + calibrationLength
         var isMinTextDraw = false
         var isMaxTextDraw = false
-        while (startNum <= endNum) {
-            if (startNum % perUnitCount == 0) {
 
+        while (startNum <= endNum) {
+            if ((startNum - minNumber) % perUnitCount == 0) {
                 paint.color = stepCalibrationColor
                 canvas.drawLine(distance, startY, distance, stopY, paint)
-
                 val number = startNum / 10
                 if (number == minNumber / 10 || number == maxNumber / 10) {
                     val text = number.toString()
@@ -270,7 +274,6 @@ class RulerView @JvmOverloads constructor(
                     val baseline = height - tempRect.height() / 2f - (textPaint.descent() + textPaint.ascent()) / 2
 
                     if (x > textMargin && number == minNumber / 10) {
-                        Log.w("sqsong", "x: $x, textMargin: $textMargin")
                         canvas.drawText(text, x, baseline, textPaint)
                         isMinTextDraw = true
                     }

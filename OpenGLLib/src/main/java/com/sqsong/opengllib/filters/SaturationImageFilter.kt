@@ -1,0 +1,26 @@
+package com.sqsong.opengllib.filters
+
+import android.content.Context
+import android.opengl.GLES30
+import android.util.Log
+import com.sqsong.opengllib.common.Program
+
+class SaturationImageFilter(
+    context: Context,
+    private var saturation: Float = 1f,
+    initOutputBuffer: Boolean = true
+) : BaseImageFilter(context, fragmentAssets = "shader/saturation_filter_frag.frag", initOutputBuffer = initOutputBuffer) {
+
+    override fun onPreDraw(program: Program) {
+        program.getUniformLocation("saturation").let {
+            Log.d("songmao", "ContrastImageFilter onPreDraw: saturation location: $it")
+            GLES30.glUniform1f(it, saturation)
+        }
+    }
+
+    override fun setProgress(progress: Float, extraType: Int) {
+        saturation = range(progress, 0.2f, 1.8f)
+        Log.d("songmao", "BrightnessImageFilter setProgress: $progress, saturation: $saturation")
+    }
+
+}

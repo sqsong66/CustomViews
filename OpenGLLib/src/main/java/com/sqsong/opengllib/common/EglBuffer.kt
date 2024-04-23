@@ -54,9 +54,10 @@ class EglBuffer {
             eglContext = createEGLContext(eglDisplay, eglConfigs)
             EGL.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)
             imageFilter.ifNeedInit()
-            imageFilter.setImageBitmap(bitmap)
+            val inputTexture = BitmapTexture(bitmap)
+            imageFilter.onInputTextureLoaded(inputTexture.textureWidth, inputTexture.textureHeight)
             imageFilter.onViewSizeChanged(w, h)
-            imageFilter.onDrawFrame()
+            imageFilter.onDrawFrame(inputTexture)
             EGL.eglSwapBuffers(eglDisplay, eglSurface)
             return imageFilter.getRenderedBitmap()
         } catch (ex: Exception) {

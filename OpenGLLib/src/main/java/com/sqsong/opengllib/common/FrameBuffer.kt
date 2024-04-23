@@ -36,6 +36,7 @@ class FrameBuffer(
     }
 
     fun getRenderedBitmap(): Bitmap {
+        // 绑定离谱渲染缓冲区读取渲染结果
         bindFrameBuffer()
         val buffer = ByteBuffer.allocateDirect(width * height * 4)
         GLES30.glReadPixels(0, 0, width, height, GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, buffer)
@@ -50,5 +51,7 @@ class FrameBuffer(
             GLES30.glDeleteFramebuffers(1, intArrayOf(frameBufferId), 0)
             frameBufferId = GLES30.GL_NONE
         }
+        texture?.delete()
+        texture = null
     }
 }

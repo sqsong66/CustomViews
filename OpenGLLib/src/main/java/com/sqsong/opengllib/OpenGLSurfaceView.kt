@@ -29,7 +29,7 @@ class OpenGLSurfaceView(
         requestRender()
     }
 
-    fun setFilter(filter: BaseImageFilter, progress: Float = 0f) {
+    fun setFilter(filter: BaseImageFilter, progress: Float = Float.MIN_VALUE) {
         render.setFilter(filter, progress)
         requestRender()
     }
@@ -40,12 +40,21 @@ class OpenGLSurfaceView(
     }
 
     override fun onPause() {
-        super.onPause()
         render.onDestroy()
+        super.onPause()
     }
 
     fun getRenderedBitmap(): Bitmap? {
         return render.getRenderedBitmap()
+    }
+
+    fun onDestroy() {
+        render.onDestroy()
+    }
+
+    fun setGlBackgroundColor(color: Int) {
+        render.setGlBackgroundColor(color)
+        requestRender()
     }
 
 }

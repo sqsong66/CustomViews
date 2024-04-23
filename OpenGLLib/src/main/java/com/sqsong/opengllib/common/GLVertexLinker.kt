@@ -53,7 +53,6 @@ class GLVertexLinker(
     }
 
     fun draw() {
-        Log.w("BaseImageFilter", "draw() vaoId: ${vaoId[0]}")
         GLES30.glBindVertexArray(vaoId[0])
         GLES30.glDrawElements(GLES30.GL_TRIANGLES, indices.size, GLES30.GL_UNSIGNED_SHORT, 0)
         GLES30.glBindVertexArray(GLES30.GL_NONE)

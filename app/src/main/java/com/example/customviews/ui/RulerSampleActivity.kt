@@ -1,8 +1,12 @@
 package com.example.customviews.ui
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -10,9 +14,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.customviews.databinding.ActivityRulerSampleBinding
 import com.example.customviews.ui.adapter.RulerSampleAdapter
+import com.example.customviews.utils.decodeBitmapByGlide
 import com.example.customviews.utils.dp2Px
 import com.example.customviews.utils.screenWidth
 import com.example.customviews.view.RulerView
+import com.sqsong.opengllib.filters.BaseImageFilter
+import com.sqsong.opengllib.filters.ComposeAdjustImageFilter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class RulerSampleActivity : AppCompatActivity() {
 
@@ -25,6 +37,11 @@ class RulerSampleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLayout()
+
+        binding.applyFilterBtn.setOnClickListener { applyFilter() }
+        intent?.getParcelableExtra<Uri>("imageUri")?.let {
+            loadImage(it)
+        }
     }
 
     private fun initLayout() {
@@ -36,7 +53,7 @@ class RulerSampleActivity : AppCompatActivity() {
             scrollPosition(clickPosition)
         }
 
-         binding.rulerSampleRv.setPadding(padding, 0, padding, 0)
+        binding.rulerSampleRv.setPadding(padding, 0, padding, 0)
 
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.rulerSampleRv)
@@ -73,4 +90,25 @@ class RulerSampleActivity : AppCompatActivity() {
         binding.rulerSampleRv.layoutManager?.startSmoothScroll(smoothScroller)
     }
 
+    private fun loadImage(imageUri: Uri) {
+        flow {
+            decodeBitmapByGlide(this@RulerSampleActivity, imageUri, 2048)?.let { emit(it) }
+        }.flowOn(Dispatchers.IO)
+            .onEach {
+                binding.glSurfaceView.setImageBitmap(it)
+            }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun applyFilter() {
+        flow<BaseImageFilter> {
+            BitmapFactory.decodeStream(assets.open("lut/filter_03.png")).let { lutBitmap ->
+                emit(ComposeAdjustImageFilter(this@RulerSampleActivity))
+            }
+        }.flowOn(Dispatchers.IO)
+            .onEach {
+                Log.d("LUTFilterActivity", "LUT list: $it")
+                binding.glSurfaceView.setFilter(it)
+            }.launchIn(lifecycleScope)
+    }
 }
