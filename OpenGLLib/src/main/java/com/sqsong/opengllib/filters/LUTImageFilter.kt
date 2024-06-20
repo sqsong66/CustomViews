@@ -3,7 +3,6 @@ package com.sqsong.opengllib.filters
 import android.content.Context
 import android.graphics.Bitmap
 import android.opengl.GLES30
-import android.util.Log
 import com.sqsong.opengllib.common.BitmapTexture
 import com.sqsong.opengllib.common.Program
 import com.sqsong.opengllib.common.Texture
@@ -21,17 +20,14 @@ class LUTImageFilter(
         lutTexture = BitmapTexture(lutBitmap)
     }
 
-    override fun onPreDraw(program: Program) {
-        Log.d("BaseImageFilter", "onPreDraw, textureId: ${lutTexture?.textureId}")
+    override fun onPreDraw(program: Program, texture: Texture) {
         program.getUniformLocation("uLookupTexture").let {
-            Log.w("BaseImageFilter", "onPreDraw, uLookupTexture location: $it")
             GLES30.glActiveTexture(GLES30.GL_TEXTURE1)
             lutTexture?.bindTexture()
             GLES30.glUniform1i(it, 1)
         }
 
         program.getUniformLocation("intensity").let {
-            Log.w("BaseImageFilter", "onPreDraw, intensity location: $it, intensity: $intensity")
             GLES30.glUniform1f(it, intensity)
         }
     }

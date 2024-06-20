@@ -2,7 +2,6 @@ package com.sqsong.opengllib
 
 import android.graphics.Bitmap
 import android.opengl.GLES30
-import android.opengl.GLES31
 import android.opengl.GLSurfaceView
 import android.util.Log
 import com.sqsong.opengllib.common.BitmapTexture
@@ -17,8 +16,6 @@ class OpenGLRender(
     private var imageFilter: BaseImageFilter,
 ) : GLSurfaceView.Renderer {
 
-    private val TAG = this.javaClass.simpleName
-
     private var bgRed = 0f
     private var bgGreen = 0f
     private var bgBlue = 0f
@@ -30,14 +27,13 @@ class OpenGLRender(
     private val runOnDraw = LinkedList<Runnable>()
 
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig?) {
-        Log.d("BaseImageFilter", "$TAG onSurfaceCreated")
-        GLES30.glClearColor(bgRed, bgGreen, bgBlue, bgAlpha)
+        GLES30.glClearColor(0f, 0f, 0f, 0f)
+        GLES30.glEnable(GLES30.GL_BLEND)
+        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA)
         imageFilter.ifNeedInit()
         imageBitmap?.let {
-            if (inputTexture == null) {
-                inputTexture = BitmapTexture(it).also { inputTexture ->
-                    imageFilter.onInputTextureLoaded(inputTexture.textureWidth, inputTexture.textureHeight)
-                }
+            inputTexture = BitmapTexture(it).also { inputTexture ->
+                imageFilter.onInputTextureLoaded(inputTexture.textureWidth, inputTexture.textureHeight)
             }
         }
     }
@@ -45,15 +41,13 @@ class OpenGLRender(
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
         viewWidth = width
         viewHeight = height
-        Log.d("BaseImageFilter", "$TAG onSurfaceChanged")
+        // Logger.d("$TAG onSurfaceChanged")
         GLES30.glViewport(0, 0, width, height)
         imageFilter.onViewSizeChanged(width, height)
     }
 
     override fun onDrawFrame(gl: GL10) {
-        Log.d("BaseImageFilter", "$TAG onDrawFrame")
-        GLES30.glClearColor(bgRed, bgGreen, bgBlue, bgAlpha)
-        GLES30.glClear(GLES31.GL_COLOR_BUFFER_BIT or GLES31.GL_DEPTH_BUFFER_BIT)
+        GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GLES30.GL_DEPTH_BUFFER_BIT)
         runAll(runOnDraw)
         inputTexture?.let { texture ->
             imageFilter.onDrawFrame(texture)
@@ -61,6 +55,7 @@ class OpenGLRender(
     }
 
     fun setImageBitmap(bitmap: Bitmap) {
+        if (this.imageBitmap == bitmap) return
         this.imageBitmap = bitmap
         runOnDraw {
             inputTexture?.delete()
@@ -76,7 +71,7 @@ class OpenGLRender(
             val oldFilter = imageFilter
             this.imageFilter = filter
             if (progress != Float.MIN_VALUE) {
-                this.imageFilter.setProgress(progress)
+                this.imageFilter.setProgress(progress, 0)
             }
             oldFilter.onDestroy()
             imageFilter.ifNeedInit()
@@ -111,8 +106,8 @@ class OpenGLRender(
         }
     }
 
-    fun setProgress(progress: Float) {
-        imageFilter.setProgress(progress)
+    fun setProgress(progress: Float, extraType: Int = 0) {
+        imageFilter.setProgress(progress, extraType)
     }
 
     fun getRenderedBitmap(): Bitmap? {

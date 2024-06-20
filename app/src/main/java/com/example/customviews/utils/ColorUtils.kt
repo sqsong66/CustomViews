@@ -7,14 +7,18 @@ import androidx.core.graphics.ColorUtils
 import com.google.android.material.color.MaterialColors
 import java.util.Random
 
-fun getThemeColorWithAlpha(context: Context, resId: Int, alpha: Int): Int {
+fun getThemeColorWithAlpha(context: Context, resId: Int, alpha: Int = 255): Int {
     val color = MaterialColors.getColor(context, resId, Color.TRANSPARENT)
-    return ColorUtils.setAlphaComponent(color, alpha)
+    return if (alpha == 255) {
+        color
+    } else {
+        ColorUtils.setAlphaComponent(color, alpha)
+    }
 }
 
 fun getThemeColor(context: Context?, resId: Int): Int {
     if (context == null) return Color.TRANSPARENT
-    return MaterialColors.getColor(context, resId, Color.TRANSPARENT)
+    return getThemeColorWithAlpha(context, resId)
 }
 
 fun getSurfaceGradientDrawable(context: Context): GradientDrawable {

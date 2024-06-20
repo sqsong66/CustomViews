@@ -10,12 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.customviews.databinding.ActivityOpenGlfilterBinding
 import com.example.customviews.utils.decodeBitmapByGlide
 import com.sqsong.opengllib.filters.BaseImageFilter
-import com.sqsong.opengllib.filters.BrightnessImageFilter
-import com.sqsong.opengllib.filters.ComposeAdjustImageFilter
-import com.sqsong.opengllib.filters.ContrastImageFilter
 import com.sqsong.opengllib.filters.GaussianBlurImageFilter
-import com.sqsong.opengllib.filters.LUTImageFilter
-import com.sqsong.opengllib.filters.VignetteImageFilter
+import com.sqsong.opengllib.filters.HexagonMosaicFilter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -27,7 +23,7 @@ class OpenGLFilterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOpenGlfilterBinding
 
     private val imageFilter by lazy {
-        BrightnessImageFilter(this)
+        HexagonMosaicFilter(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,5 +81,15 @@ class OpenGLFilterActivity : AppCompatActivity() {
                 Log.d("LUTFilterActivity", "LUT list: $it")
                 binding.glSurfaceView.setFilter(it)
             }.launchIn(lifecycleScope)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.glSurfaceView.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.glSurfaceView.onResume()
     }
 }

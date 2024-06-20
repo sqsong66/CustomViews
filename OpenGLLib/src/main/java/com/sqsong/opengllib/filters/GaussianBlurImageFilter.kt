@@ -2,7 +2,6 @@ package com.sqsong.opengllib.filters
 
 import android.content.Context
 import android.opengl.GLES30
-import android.util.Log
 import com.sqsong.opengllib.common.FrameBuffer
 import com.sqsong.opengllib.common.GLVertexLinker
 import com.sqsong.opengllib.common.Program
@@ -12,6 +11,7 @@ class GaussianBlurImageFilter(
     context: Context,
     private var blurRadius: Int = 0,
     initOutputBuffer: Boolean = true,
+    private var maxBlurRadius: Int = 50,
 ) : BaseImageFilter(context, fragmentAssets = "shader/gaussian_blur_filter_frag.frag", initOutputBuffer = initOutputBuffer) {
 
     private var horizontalBlurFbo: FrameBuffer? = null
@@ -30,7 +30,6 @@ class GaussianBlurImageFilter(
         val height = horizontalBlurFbo?.height ?: 0
         GLES30.glViewport(0, 0, width, height)
         fboProgram?.getUniformLocation("uTexture")?.let {
-            Log.d("GaussianBlurImageFilter", "onBeforeFrameBufferDraw, textureId: ${inputTexture.textureId}, uTexture location: $it")
             GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
             inputTexture.bindTexture()
             GLES30.glUniform1i(it, 0)
@@ -43,7 +42,8 @@ class GaussianBlurImageFilter(
         return horizontalBlurFbo?.texture
     }
 
-    override fun onPreDraw(program: Program) {
+    override fun onPreDraw(program: Program, texture: Texture) {
+        // vertical blur
         setBlurParams(program, isHorizontal = false)
     }
 
@@ -62,6 +62,6 @@ class GaussianBlurImageFilter(
     }
 
     override fun setProgress(progress: Float, extraType: Int) {
-        blurRadius = (progress * 50).toInt()
+        blurRadius = range(progress, 0f, maxBlurRadius.toFloat()).toInt()
     }
 }

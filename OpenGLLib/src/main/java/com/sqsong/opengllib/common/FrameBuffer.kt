@@ -35,6 +35,10 @@ class FrameBuffer(
         GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, frameBufferId)
     }
 
+    fun unbindFrameBuffer() {
+        GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, 0)
+    }
+
     fun getRenderedBitmap(): Bitmap {
         // 绑定离谱渲染缓冲区读取渲染结果
         bindFrameBuffer()

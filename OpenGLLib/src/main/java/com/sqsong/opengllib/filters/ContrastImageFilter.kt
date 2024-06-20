@@ -2,8 +2,8 @@ package com.sqsong.opengllib.filters
 
 import android.content.Context
 import android.opengl.GLES30
-import android.util.Log
 import com.sqsong.opengllib.common.Program
+import com.sqsong.opengllib.common.Texture
 
 class ContrastImageFilter(
     context: Context,
@@ -11,16 +11,16 @@ class ContrastImageFilter(
     initOutputBuffer: Boolean = true
 ) : BaseImageFilter(context, fragmentAssets = "shader/contrast_filter_frag.frag", initOutputBuffer = initOutputBuffer) {
 
-    override fun onPreDraw(program: Program) {
+    override fun onPreDraw(program: Program, texture: Texture) {
         program.getUniformLocation("contrast").let {
-            Log.d("songmao", "ContrastImageFilter onPreDraw: contrast location: $it")
+            // Log.d("BaseImageFilter", "ContrastImageFilter onPreDraw: contrast location: $it, value: $contrast")
             GLES30.glUniform1f(it, contrast)
         }
     }
 
     override fun setProgress(progress: Float, extraType: Int) {
         contrast = range(progress, 0.75f, 1.25f)
-        Log.d("songmao", "BrightnessImageFilter setProgress: $progress, brightness: $contrast")
+        // Log.d("BaseImageFilter", "ContrastImageFilter setProgress: $progress, contrast: $contrast")
     }
 
 }

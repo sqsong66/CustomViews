@@ -21,4 +21,15 @@
         in mollis nisl ex sed nisl. Donec maximus ullamcorper sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus vestibulum. Fusce dictum libero quis erat maximus, vitae
         volutpat diam dignissim.
     </string>
+
+    <string name="key_adjust_brightness">Brightness</string>
+    <string name="key_adjust_contrast">Contrast</string>
+    <string name="key_adjust_saturation">Saturation</string>
+    <string name="key_adjust_exposure">Exposure</string>
+    <string name="key_adjust_highlight">Highlight</string>
+    <string name="key_adjust_shadow">Shadow</string>
+    <string name="key_adjust_temperature">Temperature</string>
+    <string name="key_adjust_sharpness">Sharpness</string>
+    <string name="key_adjust_vignette">Vignette</string>
+
 </resources>

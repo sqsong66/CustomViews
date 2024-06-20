@@ -20,6 +20,7 @@ import com.example.customviews.utils.ext.matrixScale
 import com.example.customviews.utils.getCenterFromRect
 import com.example.customviews.utils.getCornersFromRect
 import com.github.chrisbanes.photoview.CustomGestureDetector
+import com.github.chrisbanes.photoview.GestureListenerAdapter
 import com.github.chrisbanes.photoview.OnGestureListener
 import kotlin.math.max
 
@@ -54,7 +55,7 @@ open class ScalableImageView @JvmOverloads constructor(
         }
     }
 
-    private val onGestureListener = object : OnGestureListener {
+    private val onGestureListener = object : GestureListenerAdapter() {
         override fun onDrag(x: Float, y: Float, dx: Float, dy: Float, pointerCount: Int) {
             onViewDrag(x, y, dx, dy, pointerCount)
         }

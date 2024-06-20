@@ -8,19 +8,24 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.customviews.databinding.ActivityMainBinding
+import com.example.customviews.ui.BlurImageActivity
 import com.example.customviews.ui.ColorPanelActivity
+import com.example.customviews.ui.DownloadFontSampleActivity
 import com.example.customviews.ui.ImageFilter2Activity
 import com.example.customviews.ui.ImageFilterActivity
 import com.example.customviews.ui.LUTFilterActivity
 import com.example.customviews.ui.MosaicActivity
 import com.example.customviews.ui.OpenGLFilterActivity
+import com.example.customviews.ui.OpenGLImageVideoFilterActivity
 import com.example.customviews.ui.OpenGLProcessorActivity
 import com.example.customviews.ui.OpenGLSampleActivity
+import com.example.customviews.ui.PatternLockActivity
 import com.example.customviews.ui.RulerSampleActivity
 import com.example.customviews.ui.ScalableImageViewActivity
 import com.example.customviews.ui.ScaleCanvasActivity
 import com.example.customviews.ui.SwapFaceResultActivity
 import com.example.customviews.ui.TurntableActivity
+import com.example.customviews.ui.VideoTransformerActivity
 import com.example.customviews.ui.WatermarkMaterialActivity
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -55,6 +60,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.openGlSampleBtn.setOnClickListener(this)
         binding.rulerBtn.setOnClickListener(this)
         binding.openGlFilterBtn.setOnClickListener(this)
+        binding.blurImageBtn.setOnClickListener(this)
+        binding.videoTransformerBtn.setOnClickListener(this)
+        binding.openglImageVideoFilterBtn.setOnClickListener(this)
+        binding.fontSampleBtn.setOnClickListener(this)
+        binding.patternLockBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -115,13 +125,34 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.openGlFilterBtn -> {
                 startLaunchImageActivity(4)
             }
+
+            R.id.blurImageBtn -> {
+                startLaunchImageActivity(5)
+            }
+
+            R.id.videoTransformerBtn -> {
+                startLaunchImageActivity(6, 1)
+            }
+
+            R.id.openglImageVideoFilterBtn -> {
+                startLaunchImageActivity(7)
+            }
+
+            R.id.fontSampleBtn -> {
+                startActivity(Intent(this, DownloadFontSampleActivity::class.java))
+            }
+
+            R.id.patternLockBtn -> {
+                startActivity(Intent(this, PatternLockActivity::class.java))
+            }
         }
     }
 
-    private fun startLaunchImageActivity(requestType: Int) {
+    private fun startLaunchImageActivity(requestType: Int, mediaType: Int = 0) {
         requestUriType = requestType
         val intent = Intent(Intent.ACTION_PICK).apply {
-            type = "image/*"
+            type = if (mediaType == 0) "image/*" else "video/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
         }
         requestImageLaunch.launch(intent)
     }
@@ -154,6 +185,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             4 -> {
                 startActivity(Intent(this, OpenGLFilterActivity::class.java).apply {
+                    putExtra("imageUri", uri)
+                })
+            }
+
+            5 -> {
+                startActivity(Intent(this, BlurImageActivity::class.java).apply {
+                    putExtra("imageUri", uri)
+                })
+            }
+
+            6 -> {
+                startActivity(Intent(this, VideoTransformerActivity::class.java).apply {
+                    putExtra("videoUri", uri)
+                })
+            }
+
+            7 -> {
+                startActivity(Intent(this, OpenGLImageVideoFilterActivity::class.java).apply {
                     putExtra("imageUri", uri)
                 })
             }

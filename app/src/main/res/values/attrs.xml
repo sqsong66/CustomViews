@@ -98,4 +98,59 @@
         <attr name="rmv_textSize" format="dimension" />
         <attr name="rmv_textColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="BlurImageView">
+        <attr name="biv_blurRadius" format="integer" />
+        <attr name="biv_blurMode" format="enum">
+            <enum name="mode_circle" value="0" />
+            <enum name="mode_square" value="1" />
+            <enum name="mode_straight_line" value="2" />
+            <enum name="star" value="3" />
+        </attr>
+        <attr name="biv_defaultBlurSizeFactor" format="float" />
+        <attr name="biv_minBlurSize" format="dimension" />
+        <attr name="biv_overlayColor" format="color" />
+        <attr name="biv_dashStrokeWidth" format="dimension" />
+        <attr name="biv_dashGap" format="dimension" />
+        <attr name="biv_dashColor" format="color" />
+        <attr name="biv_blurImageScaleFactor" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="EditMenuView">
+        <attr name="emv_bgColor" format="color" />
+        <attr name="emv_checkedBgColor" format="color" />
+        <attr name="emv_checked" format="boolean" />
+        <attr name="emv_enableCheck" format="boolean" />
+        <attr name="emv_iconPadding" format="dimension" />
+        <attr name="emv_iconSize" format="dimension" />
+        <attr name="emv_iconTint" format="color" />
+        <attr name="emv_checkedIconTint" format="color" />
+        <attr name="emv_iconRes" format="reference" />
+        <attr name="emv_enableOverlay" format="boolean" />
+        <attr name="emv_overlayColor" format="color" />
+        <attr name="emv_overlayText" format="string" />
+        <attr name="emv_overlayTextSize" format="dimension" />
+        <attr name="emv_overlayTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PatternLockView">
+        <attr name="plv_dotColor" format="color" />
+        <attr name="plv_dotRadius" format="dimension" />
+        <attr name="plv_dotExpandColor" format="color" />
+        <attr name="plv_dotExpandRadius" format="dimension" />
+        <attr name="plv_lineColor" format="color" />
+        <attr name="plv_lineWidth" format="dimension" />
+        <attr name="plv_dotCorrectColor" format="color" />
+        <attr name="plv_lineCorrectColor" format="color" />
+        <attr name="plv_dotExpandCorrectColor" format="color" />
+        <attr name="plv_dotErrorColor" format="color" />
+        <attr name="plv_lineErrorColor" format="color" />
+        <attr name="plv_dotExpandErrorColor" format="color" />
+        <attr name="plv_lockState" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="correct" value="1" />
+            <enum name="error" value="2" />
+        </attr>
+        <attr name="plv_minValidNumber" format="integer" />
+    </declare-styleable>
 </resources>

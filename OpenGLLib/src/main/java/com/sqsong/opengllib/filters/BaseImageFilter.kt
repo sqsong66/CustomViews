@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.opengl.GLES30
 import android.opengl.Matrix
-import android.util.Log
 import com.sqsong.opengllib.common.FrameBuffer
 import com.sqsong.opengllib.common.GLVertexLinker
 import com.sqsong.opengllib.common.Program
@@ -15,7 +14,10 @@ open class BaseImageFilter(
     private val context: Context,
     private val vertexAssets: String = "shader/no_filter_ver.vert",
     private val fragmentAssets: String = "shader/no_filter_frag.frag",
-    private val initOutputBuffer: Boolean = true // 是否需要将帧缓冲区中渲染的纹理输出到屏幕上
+    // 是否需要将帧缓冲区中渲染的纹理输出到屏幕上，正常单一滤镜是需要将渲染结果输出到屏幕上的，
+    // 但如果当前滤镜是添加到组合滤镜中去的则不需要将渲染结果输出到屏幕上，只需要在FBO中渲染
+    // 当前的滤镜效果即可。最终是在组合滤镜中将所有的滤镜效果渲染到屏幕上去。
+    private val initOutputBuffer: Boolean = true
 ) {
 
     private val TAG = this.javaClass.simpleName
@@ -46,30 +48,40 @@ open class BaseImageFilter(
 
     private val vertIndices = shortArrayOf(0, 1, 2, 0, 2, 3)
 
+    // 屏幕着色器程序
     private var screenProgram: Program? = null
+    // 屏幕着色器顶点数据链接器
     private val screenVertexLinker by lazy {
         GLVertexLinker(vertTexCoords, vertIndices, 5 * 4)
     }
 
+    // 离谱渲染着色器程序
     private var fboProgram: Program? = null
+    // 离谱渲染帧缓冲区
     private var frameBuffer: FrameBuffer? = null
+    // 离谱渲染顶点数据链接器
     private val fboVertexLinker by lazy {
         GLVertexLinker(fboVertTexCoords, vertIndices, 5 * 4)
     }
 
+    /**
+     * 初始化。主要是在GLSurfaceView.Renderer的onSurfaceCreated()方法中调用,
+     * 因为这是OpenGL的环境已创建好。
+     */
     fun ifNeedInit() {
         if (!isInitialized) onInit()
     }
 
     private fun onInit() {
+        // 初始化屏幕参数：设置屏幕输出顶点坐标、纹理坐标、变换矩阵、着色器程序等
         if (initOutputBuffer) initScreenParams()
+        // 初始离谱渲染参数
         fboVertexLinker.setupVertices()
         val fboVertexShader = context.readAssetsText(vertexAssets)
         val fboFragmentShader = context.readAssetsText(fragmentAssets)
         fboProgram = Program.of(fboVertexShader, fboFragmentShader).apply {
             onInitialized(this)
         }
-        Log.d("BaseImageFilter", "onInit, fboProgram: $fboProgram, fboFragmentShader:\n$fboFragmentShader")
         isInitialized = true
     }
 
@@ -101,7 +113,7 @@ open class BaseImageFilter(
         return inputTexture
     }
 
-    protected open fun onPreDraw(program: Program) {}
+    protected open fun onPreDraw(program: Program, texture: Texture) {}
 
     protected open fun onAfterDraw() {}
 
@@ -113,46 +125,47 @@ open class BaseImageFilter(
     }
 
     open fun onDrawFrame(inputTexture: Texture) {
-        Log.w("BaseImageFilter", "$TAG onDrawFrame, thread: ${Thread.currentThread().name}")
+        // Log.w("BaseImageFilter", "$TAG onDrawFrame, thread: ${Thread.currentThread().name}")
 
-        // 绑定离谱缓冲区的program
-        fboProgram?.use()
-        // 在离谱缓冲区处理前先将纹理交给底下的子类来进行处理，比如高斯模糊的横向模糊，横向模糊完后，将处理的纹理交给
-        // 当前的离谱缓冲区来进行进一步的纵向模糊处理
+        // 绑定离屏缓冲区的program
+         fboProgram?.use()
+        // 在离屏缓冲区处理前先将纹理交给底下的子类来进行处理，比如高斯模糊的横向模糊，横向模糊完后，将处理的纹理交给
+        // 当前的离屏缓冲区来进行进一步的纵向模糊处理
         onBeforeFrameBufferDraw(inputTexture, fboProgram, fboVertexLinker)?.let { processTexture ->
-            Log.d("BaseImageFilter", "$TAG onDrawFrame, processTexture: ${processTexture.textureId}")
+            fboProgram?.use()
             frameBuffer?.bindFrameBuffer()
             GLES30.glViewport(0, 0, processTexture.textureWidth, processTexture.textureHeight)
             onBindTexture(processTexture)
             fboVertexLinker.draw()
             processTexture.unbindTexture()
             onAfterDraw()
+            frameBuffer?.unbindFrameBuffer()
         }
 
-        // 离谱缓冲区处理完成后，将离谱缓冲区处理完的纹理交给默认缓冲来输出到屏幕
-        if (initOutputBuffer) drawTextureOnScreen()
+        // 离屏缓冲区处理完成后，将离谱缓冲区处理完的纹理交给默认缓冲来输出到屏幕
+        if (initOutputBuffer) drawTextureOnScreen(frameBuffer?.texture)
     }
 
-    private fun drawTextureOnScreen() {
+    private fun drawTextureOnScreen(texture: Texture?) {
         GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, 0)
         GLES30.glViewport(0, 0, viewWidth, viewHeight)
         screenProgram?.use()
-        onBindScreenTexture(inputTextureWidth, inputTextureHeight)
+        onBindScreenTexture(texture, inputTextureWidth, inputTextureHeight)
         screenVertexLinker.draw()
     }
 
     private fun onBindTexture(texture: Texture) {
         fboProgram?.getUniformLocation("uTexture")?.let {
-            Log.d("BaseImageFilter", "$TAG onBindTexture, viewWidth: $viewWidth, viewHeight: $viewHeight, textureId: ${texture.textureId}, uTexture location: $it")
+            // Log.d("BaseImageFilter", "$TAG onBindTexture, viewWidth: $viewWidth, viewHeight: $viewHeight, textureId: ${texture.textureId}, uTexture location: $it")
             GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
             texture.bindTexture()
             GLES30.glUniform1i(it, 0)
         }
-        fboProgram?.let { onPreDraw(it) }
+        fboProgram?.let { onPreDraw(it, texture) }
     }
 
-    private fun onBindScreenTexture(width: Int, height: Int) {
-        Log.d("BaseImageFilter", "$TAG onBindScreenTexture, viewWidth: $viewWidth, viewHeight: $viewHeight")
+    private fun onBindScreenTexture(texture: Texture?, width: Int, height: Int) {
+        // Log.d("BaseImageFilter", "$TAG onBindScreenTexture, viewWidth: $viewWidth, viewHeight: $viewHeight")
         // 进行视图变换将纹理正确的显示在屏幕(GLSurfaceView)上(根据纹理的宽高以及控件的宽高比来计算模型矩阵)
         val textureAspectRatio = width.toFloat() / height.toFloat()
         val viewAspectRatio = viewWidth.toFloat() / viewHeight.toFloat()
@@ -171,14 +184,14 @@ open class BaseImageFilter(
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvpMatrix, 0)
 
         screenProgram?.getUniformLocation("uMvpMatrix")?.let {
-            Log.i("BaseImageFilter", "$TAG onBindScreenTexture, uMvpMatrix location: $it")
+            // Log.i("BaseImageFilter", "$TAG onBindScreenTexture, uMvpMatrix location: $it")
             GLES30.glUniformMatrix4fv(it, 1, false, mvpMatrix, 0)
         }
 
         // 绑定离谱渲染的纹理，显示到屏幕上
         screenProgram?.getUniformLocation("uTexture")?.let {
-            Log.i("BaseImageFilter", "$TAG onBindScreenTexture, uTexture location: $it, textureId: ${frameBuffer?.texture?.textureId}")
-            frameBuffer?.texture?.textureId?.let { textureId ->
+            // Log.i("BaseImageFilter", "$TAG onBindScreenTexture, uTexture location: $it, textureId: ${frameBuffer?.texture?.textureId}")
+            texture?.textureId?.let { textureId ->
                 GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
                 GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textureId)
                 GLES30.glUniform1i(it, 0)
@@ -203,9 +216,10 @@ open class BaseImageFilter(
         screenProgram = null
         fboProgram?.delete()
         fboProgram = null
+        frameBuffer?.delete()
+        frameBuffer = null
         screenVertexLinker.cleanup()
         fboVertexLinker.cleanup()
         isInitialized = false
     }
-
 }

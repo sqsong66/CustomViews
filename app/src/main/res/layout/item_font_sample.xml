@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="16dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fontNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ma Shan Zheng" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fontPreviewTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_weight="1"
+        android:text="字体预览" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loadingProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        app:indicatorInset="0dp"
+        app:indicatorSize="20dp"
+        app:trackCornerRadius="1dp"
+        app:trackThickness="2dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

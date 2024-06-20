@@ -17,6 +17,7 @@ class RulerMaskView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+
     private var maskColor: Int = 0
     private var radius: Float = 0f
     private var borderWidth: Float = 0f
@@ -26,6 +27,7 @@ class RulerMaskView @JvmOverloads constructor(
     private var textColor: Int = 0
 
     private var currentValue = 0
+    private var drawOverlay = false
 
     private val paint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -71,6 +73,7 @@ class RulerMaskView @JvmOverloads constructor(
     }
 
     private fun drawText(canvas: Canvas) {
+        if (!drawOverlay) return
         val text = currentValue.toString()
         val textWidth = textPaint.measureText(text)
         val baseline = height / 2f - (textPaint.descent() + textPaint.ascent()) / 2
@@ -78,9 +81,11 @@ class RulerMaskView @JvmOverloads constructor(
     }
 
     private fun drawCircle(canvas: Canvas) {
-        paint.style = Paint.Style.FILL
-        paint.color = maskColor
-        canvas.drawCircle(width / 2f, height / 2f, radius, paint)
+        if (drawOverlay) {
+            paint.style = Paint.Style.FILL
+            paint.color = maskColor
+            canvas.drawCircle(width / 2f, height / 2f, radius, paint)
+        }
 
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = borderWidth
@@ -88,8 +93,16 @@ class RulerMaskView @JvmOverloads constructor(
         canvas.drawCircle(width / 2f, height / 2f, radius + borderGap, paint)
     }
 
-    fun setCurrentValue(value: Int) {
+    fun setCurrentValue(value: Int, drawOverlay: Boolean = true) {
         currentValue = value
+        this.drawOverlay = drawOverlay
         invalidate()
+    }
+
+    fun setDrawOverlay(drawOverlay: Boolean) {
+        if (this.drawOverlay != drawOverlay) {
+            this.drawOverlay = drawOverlay
+            invalidate()
+        }
     }
 }

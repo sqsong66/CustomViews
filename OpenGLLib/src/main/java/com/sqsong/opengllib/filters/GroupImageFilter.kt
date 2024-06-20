@@ -1,6 +1,7 @@
 package com.sqsong.opengllib.filters
 
 import android.content.Context
+import com.sqsong.opengllib.common.FrameBuffer
 import com.sqsong.opengllib.common.GLVertexLinker
 import com.sqsong.opengllib.common.Program
 import com.sqsong.opengllib.common.Texture
@@ -30,6 +31,7 @@ open class GroupImageFilter(
     }
 
     override fun onBeforeFrameBufferDraw(inputTexture: Texture, fboProgram: Program?, defaultFboGLVertexLinker: GLVertexLinker): Texture? {
+        // 最开始输入的纹理为原始纹理
         var texture: Texture? = inputTexture
         mergedFilters.forEach { filter ->
             texture?.let { filter.onDrawFrame(it) }

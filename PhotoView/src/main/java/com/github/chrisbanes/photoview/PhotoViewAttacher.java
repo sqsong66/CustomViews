@@ -98,7 +98,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private boolean mZoomEnabled = true;
     private ScaleType mScaleType = ScaleType.FIT_CENTER;
 
-    private final OnGestureListener onGestureListener = new OnGestureListener() {
+    private final OnGestureListener onGestureListener = new GestureListenerAdapter() {
         @Override
         public void onDrag(float x, float y, float dx, float dy, int pointerCount) {
             if (mScaleDragDetector.isScaling()) {

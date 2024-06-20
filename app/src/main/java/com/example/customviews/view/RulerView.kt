@@ -29,7 +29,7 @@ class RulerView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     interface OnValueChangeListener {
-        fun onValueChange(value: Float)
+        fun onValueChange(value: Float, isStop: Boolean)
     }
 
     private var calibrationWidth: Float = 0f
@@ -61,12 +61,13 @@ class RulerView @JvmOverloads constructor(
     private var lastX = 0f
     private var lastY = 0f
     private var downX = 0f
-    private var isTouched = false
+    // 默认设置成true，防止一进来的时候触发onComputeScroll导致回调
+    private var isTouched = true
+    private var isStopScroll = false
     private var minFlingVelocity = 0
     private var maxFlingVelocity = 0
     private val tempRect = Rect()
     private var currentProgress: Int = 0
-    private var drawCalibrationNumberList = mutableListOf<Int>()
     private var onValueChangeListener: OnValueChangeListener? = null
     private val scroller by lazy {
         OverScroller(context)
@@ -132,12 +133,12 @@ class RulerView @JvmOverloads constructor(
         numberUnit = (calibrationUnit * 10).toInt()
         currentProgress = (currentNumber - minNumber) / numberUnit
 
-        for (i in minNumber .. maxNumber step numberUnit) {
-            drawCalibrationNumberList.add(i)
-        }
-
         currentDistance = (currentNumber - minNumber).toFloat() / numberUnit * calibrationGap
         totalDistance = (maxNumber - minNumber).toFloat() / numberUnit * calibrationGap
+
+        if (width != 0) {
+            widthRangeNumber = (width / calibrationGap).toInt() * numberUnit
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -169,7 +170,8 @@ class RulerView @JvmOverloads constructor(
                     dx *= 0.3f
                 }
                 currentDistance -= dx
-                calculateValues()
+                calculateValues(false)
+                invalidate()
             }
 
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
@@ -193,7 +195,7 @@ class RulerView @JvmOverloads constructor(
                     }
 
                 velocityTracker.clear()
-                postInvalidateOnAnimation()
+                invalidate()
                 isTouched = false
             }
         }
@@ -204,10 +206,15 @@ class RulerView @JvmOverloads constructor(
 
     override fun computeScroll() {
         if (scroller.computeScrollOffset()) {
+            // Log.w("RulerView", "computeScroll: ${scroller.computeScrollOffset()}")
+            isStopScroll = false
             currentDistance = scroller.currX.toFloat()
-            calculateValues()
+            calculateValues(false)
+            invalidate()
         } else {
+            Log.d("RulerView", "computeScroll Stop.")
             if ((currentDistance < 0 || currentDistance > totalDistance) && !isTouched) {
+                isStopScroll = false
                 val startDistance = currentDistance
                 val endDistance = if (currentDistance < 0) 0 else totalDistance.toInt()
                 scroller.startScroll(
@@ -215,24 +222,34 @@ class RulerView @JvmOverloads constructor(
                     (endDistance - startDistance).toInt(), 0,
                     500 // 可调整的回弹时间，以毫秒为单位
                 )
-                postInvalidateOnAnimation()
+                invalidate()
+            } else {
+                if (!isTouched) {
+                    isStopScroll = true
+                    calculateValues(true)
+                }
             }
         }
     }
 
-    private fun calculateValues() {
+    private fun calculateValues(isStop: Boolean) {
         currentNumber = minNumber + ((currentDistance / calibrationGap) * numberUnit).toInt()
         currentValue = min(maxValue, max(minValue, currentNumber.toFloat() / 10))
         val value = round(currentValue).toInt()
-        if (value != currentProgress) {
+        if (isStopScroll && isStop) {
             currentProgress = value
-            if (currentProgress % calibrationUnit.toInt() == 0) {
-                vibratorHelper.vibrate()
+            onValueChangeListener?.onValueChange(currentProgress.toFloat(), true)
+            // Log.w("RulerView", "Stop scroll currentProgress: $currentProgress")
+        } else {
+            if (value != currentProgress) {
+                currentProgress = value
+                if (currentProgress % calibrationUnit.toInt() == 0) {
+                    vibratorHelper.vibrate()
+                }
+                onValueChangeListener?.onValueChange(currentProgress.toFloat(), false)
+                Log.d("RulerView", "currentProgress: $currentProgress, isStop: $isStop")
             }
-            onValueChangeListener?.onValueChange(currentProgress.toFloat())
-            Log.d("RulerView", "currentProgress: $currentProgress")
         }
-        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -317,10 +334,17 @@ class RulerView @JvmOverloads constructor(
         this.onValueChangeListener = listener
     }
 
-    fun setCurrentValue(value: Float) {
-        currentValue = value
+    fun setCurrentValue(value: Float, minValue: Float = 0f, maxValue: Float = 100f, unit: Float = 2f) {
+        if (!scroller.isFinished) {
+            scroller.forceFinished(true)
+        }
+        this.minValue = minValue
+        this.maxValue = maxValue
+        this.calibrationUnit = unit
+        this.currentValue = value
+        isTouched = true
         convertValueToNumber()
-        postInvalidate()
+        invalidate()
     }
 
 }

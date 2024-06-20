@@ -68,8 +68,14 @@ class RulerSampleActivity : AppCompatActivity() {
         scrollPosition(0)
 
         binding.rulerView.setOnValueChangeListener(object : RulerView.OnValueChangeListener {
-            override fun onValueChange(value: Float) {
+            override fun onValueChange(value: Float, isStop: Boolean) {
                 binding.rulerMaskView.setCurrentValue(value.toInt())
+            }
+        })
+
+        binding.rulerView1.setOnValueChangeListener(object : RulerView.OnValueChangeListener {
+            override fun onValueChange(value: Float, isStop: Boolean) {
+                Log.w("RulerSampleActivity", "value: $value, isStop: $isStop")
             }
         })
     }

@@ -2,8 +2,8 @@ package com.sqsong.opengllib.filters
 
 import android.content.Context
 import android.opengl.GLES30
-import android.util.Log
 import com.sqsong.opengllib.common.Program
+import com.sqsong.opengllib.common.Texture
 
 class VignetteImageFilter(
     context: Context,
@@ -11,9 +11,9 @@ class VignetteImageFilter(
     initOutputBuffer: Boolean = true
 ) : BaseImageFilter(context, fragmentAssets = "shader/vignette_filter_frag.frag", initOutputBuffer = initOutputBuffer) {
 
-    override fun onPreDraw(program: Program) {
+    override fun onPreDraw(program: Program, texture: Texture) {
         program.getUniformLocation("vignetteSize").let {
-            Log.d("songmao", "VignetteImageFilter onPreDraw: vignette location: $it")
+            // Log.d("songmao", "VignetteImageFilter onPreDraw: vignette location: $it")
             GLES30.glUniform1f(it, vignette)
         }
 
@@ -28,6 +28,6 @@ class VignetteImageFilter(
 
     override fun setProgress(progress: Float, extraType: Int) {
         vignette = range(progress, 0f, 1f)
-        Log.d("songmao", "VignetteImageFilter setProgress: $progress, vignette: $vignette")
+        // Log.d("songmao", "VignetteImageFilter setProgress: $progress, vignette: $vignette")
     }
 }

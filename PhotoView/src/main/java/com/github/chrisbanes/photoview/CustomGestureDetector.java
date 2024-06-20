@@ -39,6 +39,7 @@ public class CustomGestureDetector {
     private final float mTouchSlop;
     private final float mMinimumVelocity;
     private OnGestureListener mListener;
+    private float initialAngle;
 
     public CustomGestureDetector(Context context, OnGestureListener listener) {
         final ViewConfiguration configuration = ViewConfiguration.get(context);
@@ -118,6 +119,12 @@ public class CustomGestureDetector {
         }
     }
 
+    private float calculateAngle(MotionEvent event) {
+        double deltaX = event.getX(1) - event.getX(0);
+        double deltaY = event.getY(1) - event.getY(0);
+        return (float) Math.toDegrees(Math.atan2(deltaY, deltaX));
+    }
+
     private boolean processTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
         switch (action & MotionEvent.ACTION_MASK) {
@@ -132,6 +139,11 @@ public class CustomGestureDetector {
                 mLastTouchX = getActiveX(ev);
                 mLastTouchY = getActiveY(ev);
                 mIsDragging = false;
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                if (ev.getPointerCount() > 1) {
+                    initialAngle = calculateAngle(ev);
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 final float x = getActiveX(ev);
@@ -152,6 +164,16 @@ public class CustomGestureDetector {
                     if (null != mVelocityTracker) {
                         mVelocityTracker.addMovement(ev);
                     }
+                }
+                if (ev.getPointerCount() > 1) {
+                    float currentAngle = calculateAngle(ev);
+                    float deltaAngle = currentAngle - initialAngle;
+                    float centerX = (ev.getX(0) + ev.getX(1)) / 2;  // 计算旋转中心X坐标
+                    float centerY = (ev.getY(0) + ev.getY(1)) / 2;  // 计算旋转中心Y坐标
+                    if (mListener != null) {
+                        mListener.onRotate(deltaAngle, centerX, centerY);  // 通知监听器旋转发生，并传递中心点
+                    }
+                    initialAngle = currentAngle;
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:

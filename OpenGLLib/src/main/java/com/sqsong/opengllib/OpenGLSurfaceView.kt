@@ -2,10 +2,10 @@ package com.sqsong.opengllib
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.PixelFormat
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import com.sqsong.opengllib.filters.BaseImageFilter
-import com.sqsong.opengllib.filters.LUTImageFilter
 
 class OpenGLSurfaceView(
     context: Context,
@@ -20,6 +20,9 @@ class OpenGLSurfaceView(
 
     init {
         setEGLContextClientVersion(3)
+        setEGLConfigChooser(8, 8, 8, 8, 16, 0)
+        holder.setFormat(PixelFormat.TRANSLUCENT)
+        setZOrderOnTop(true)
         setRenderer(render)
         renderMode = RENDERMODE_WHEN_DIRTY
     }
@@ -34,8 +37,8 @@ class OpenGLSurfaceView(
         requestRender()
     }
 
-    fun setProgress(progress: Float) {
-        render.setProgress(progress)
+    fun setProgress(progress: Float, extraType: Int = 0) {
+        render.setProgress(progress, extraType)
         requestRender()
     }
 

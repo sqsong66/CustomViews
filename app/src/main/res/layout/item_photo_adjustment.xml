@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/indicatorView"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:background="?attr/colorSurfaceVariant" />
+
+    <com.example.customviews.view.EditMenuView
+        android:id="@+id/editMenuView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:emv_iconRes="@drawable/ic_adjustment_brightness" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/menuNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="亮度"
+        android:textAppearance="?attr/textAppearanceLabelSmall"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:visibility="visible"
+        tools:ignore="SmallSp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
