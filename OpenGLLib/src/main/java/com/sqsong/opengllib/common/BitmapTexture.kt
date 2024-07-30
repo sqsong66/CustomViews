@@ -15,7 +15,7 @@ class BitmapTexture(bitmap: Bitmap) : Texture(bitmap.width, bitmap.height) {
     }
 
     override fun onTextureCreated() {
-        Log.d("BaseImageFilter", "onTextureCreated: ${bitmapWeakRef.get()}")
+        // Log.d("BaseImageFilter", "onTextureCreated: ${bitmapWeakRef.get()}")
         bitmapWeakRef.get()?.let { bitmap ->
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0)
         }

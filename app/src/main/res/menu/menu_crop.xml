@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/cropOriginalMenu"
+        android:title="Original"
+        app:iconTint="?attr/colorOnPrimary"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/crop11Menu"
+        android:title="1:1"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/crop43Menu"
+        android:title="4:3"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/crop34Menu"
+        android:title="3:4"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/crop916Menu"
+        android:title="9:16"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/crop169Menu"
+        android:title="16:9"
+        app:showAsAction="never" />
+</menu>

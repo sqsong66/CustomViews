@@ -43,6 +43,10 @@ class Program private constructor(
         GLES30.glUseProgram(programId)
     }
 
+    fun unUse() {
+        GLES30.glUseProgram(GLES30.GL_NONE)
+    }
+
     fun delete() {
         if (programId != GLES30.GL_NONE) {
             GLES30.glDeleteProgram(programId)

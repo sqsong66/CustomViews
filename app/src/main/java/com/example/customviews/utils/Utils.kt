@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.customviews.R
 import com.example.customviews.data.PhotoAdjustmentData
 import com.sqsong.opengllib.filters.FilterMode
+import java.io.File
 
 fun range(value: Float, start: Float, end: Float): Float {
     return (end - start) * value + start
@@ -22,3 +23,4 @@ fun getAdjustmentFilterData(context: Context): List<PhotoAdjustmentData> {
     dataList.add(PhotoAdjustmentData(FilterMode.FILTER_VIGNETTE, context.getString(R.string.key_adjust_vignette), R.drawable.ic_adjustment_vignette, 0f, false, 0f, 100f, 2f))
     return dataList
 }
+

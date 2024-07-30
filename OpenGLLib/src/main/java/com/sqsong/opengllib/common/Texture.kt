@@ -30,9 +30,9 @@ abstract class Texture(
 
     abstract fun onTextureCreated()
 
-    fun bindTexture() {
+    fun bindTexture(slot: Int = 0) {
         if (textureId == NO_TEXTURE) create()
-        // Log.d("BaseImageFilter", "bindTexture: $textureId")
+        GLES30.glActiveTexture(GLES30.GL_TEXTURE0 + slot)
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textureId)
     }
 

@@ -18,6 +18,61 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/openglRecordBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Record OpenGL Video"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/blankView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lightonBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Light On Image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/openglRecordBtn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/adjustShadowBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Adjust Shadow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lightonBtn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gifMakerBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="GIF Maker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/adjustShadowBtn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/glTransitionBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:text="GL Transition"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gifMakerBtn" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/openglImageVideoFilterBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,7 +81,7 @@
             android:text="OpenGL Image Video Filterd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/blankView" />
+            app:layout_constraintTop_toBottomOf="@id/glTransitionBtn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/videoTransformerBtn"

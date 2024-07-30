@@ -153,4 +153,12 @@
         </attr>
         <attr name="plv_minValidNumber" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="GifView">
+        <attr name="gv_isRatioMode" format="boolean" />
+        <attr name="gv_borderWidth" format="dimension" />
+        <attr name="gv_borderColor" format="color" />
+        <attr name="gv_gridWidth" format="dimension" />
+        <attr name="gv_gridCount" format="integer" />
+    </declare-styleable>
 </resources>

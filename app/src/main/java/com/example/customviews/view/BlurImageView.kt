@@ -150,7 +150,7 @@ class BlurImageView @JvmOverloads constructor(
 
     private fun handleAttributes(context: Context, attrs: AttributeSet?) {
         context.obtainStyledAttributes(attrs, R.styleable.BlurImageView).apply {
-            blurRadius = getInt(R.styleable.BlurImageView_biv_blurRadius, 15)
+            blurRadius = getInt(R.styleable.BlurImageView_biv_blurRadius, 0)
             defaultBlurSizeFactor = getFloat(R.styleable.BlurImageView_biv_defaultBlurSizeFactor, 0.6f)
             check(defaultBlurSizeFactor > 0 && defaultBlurSizeFactor <= 1f) { "defaultBlurSizeFactor must be in (0.0, 1.0]" }
             minBlurSize = getDimension(R.styleable.BlurImageView_biv_minBlurSize, dp2Px(20))

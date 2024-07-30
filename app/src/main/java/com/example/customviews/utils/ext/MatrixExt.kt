@@ -20,6 +20,22 @@ fun Matrix.matrixScale(): Float {
     }
 }
 
+fun Matrix.matrixScaleX(): Float {
+    return FloatArray(9).run {
+        getValues(this)
+        val scaleX = this[Matrix.MSCALE_X]
+        scaleX
+    }
+}
+
+fun Matrix.matrixScaleY(): Float {
+    return FloatArray(9).run {
+        getValues(this)
+        val scaleY = this[Matrix.MSCALE_Y]
+        scaleY
+    }
+}
+
 fun Matrix.matrixTranslate(): FloatArray {
     return FloatArray(9).run {
         getValues(this)

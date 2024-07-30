@@ -55,11 +55,11 @@ open class BaseImageFilter(
         GLVertexLinker(vertTexCoords, vertIndices, 5 * 4)
     }
 
-    // 离谱渲染着色器程序
+    // 离屏渲染着色器程序
     private var fboProgram: Program? = null
-    // 离谱渲染帧缓冲区
+    // 离屏渲染帧缓冲区
     private var frameBuffer: FrameBuffer? = null
-    // 离谱渲染顶点数据链接器
+    // 离屏渲染顶点数据链接器
     private val fboVertexLinker by lazy {
         GLVertexLinker(fboVertTexCoords, vertIndices, 5 * 4)
     }
@@ -142,7 +142,7 @@ open class BaseImageFilter(
             frameBuffer?.unbindFrameBuffer()
         }
 
-        // 离屏缓冲区处理完成后，将离谱缓冲区处理完的纹理交给默认缓冲来输出到屏幕
+        // 离屏缓冲区处理完成后，将离屏缓冲区处理完的纹理交给默认缓冲来输出到屏幕
         if (initOutputBuffer) drawTextureOnScreen(frameBuffer?.texture)
     }
 

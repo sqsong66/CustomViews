@@ -2,6 +2,7 @@ package com.example.customviews.ui
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.customviews.databinding.ActivityBlurImageBinding
 import com.example.customviews.utils.decodeBitmapByGlide
+import com.example.customviews.utils.saveBitmapToGallery
 import com.example.customviews.view.RulerView
+import com.wangxutech.picwish.libnative.NativeLib
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -53,8 +56,13 @@ class BlurImageActivity : AppCompatActivity() {
 
     private fun getBitmap() {
         flow {
-            emit(binding.blurImageView.getResultBlurBitmap())
-        }.flowOn(Dispatchers.IO)
+            val bitmap = decodeBitmapByGlide(this@BlurImageActivity, imageUri)
+            val start = System.currentTimeMillis()
+            val b = NativeLib.lightOn(bitmap!!)
+            Log.d("songmao", "lightOn bitmap cost time: ${System.currentTimeMillis() - start}ms")
+            saveBitmapToGallery(applicationContext, b)
+            emit(b)
+        }.flowOn(Dispatchers.Default)
             .onEach {
                 binding.resultImage.visibility = View.VISIBLE
                 binding.resultImage.setImageBitmap(it)
