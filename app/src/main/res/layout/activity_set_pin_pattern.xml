@@ -31,6 +31,7 @@
         app:ppsv_setMode="mode_unlock" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/pinPatternTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -40,5 +41,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pinPatternSetView" />
+
+    <com.example.customviews.view.PinPasswordEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pinPatternTitleTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

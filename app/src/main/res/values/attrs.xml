@@ -232,4 +232,14 @@
         <attr name="ppsv_modeBgColor" format="color" />
         <attr name="ppsv_modePadding" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="PinPasswordEditText">
+        <attr name="ppet_maxPasswordLength" format="integer" />
+        <attr name="ppet_passwordCircleRadius" format="dimension" />
+        <attr name="ppet_passwordCircleStrokeWidth" format="dimension" />
+        <attr name="ppet_passwordCircleStrokeColor" format="color" />
+        <attr name="ppet_passwordCircleColor" format="color" />
+        <attr name="ppet_passwordCircleSoldColor" format="color" />
+        <attr name="ppet_passwordCircleGap" format="dimension" />
+    </declare-styleable>
 </resources>

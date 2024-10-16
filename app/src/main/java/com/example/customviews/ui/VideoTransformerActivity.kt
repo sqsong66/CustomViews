@@ -97,7 +97,7 @@ class VideoTransformerActivity : AppCompatActivity() {
         val red: Float = (colorSurface shr 16 and 0xFF) / 255.0f
         val green: Float = (colorSurface shr 8 and 0xFF) / 255.0f
         val blue: Float = (colorSurface and 0xFF) / 255.0f
-        GlUtil.setClearColor(red, green, blue, 1.0f)
+        // GlUtil.setClearColor(red, green, blue, 1.0f)
 
         binding.recyclerView.adapter = lutItemAdapter
         binding.transformBtn.setOnClickListener { startTransform(videoUri) }
