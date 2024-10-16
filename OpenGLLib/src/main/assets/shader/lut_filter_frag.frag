@@ -1,10 +1,11 @@
 #version 300 es
+precision mediump float; // 添加默认精度
 
 in highp vec2 fTexCoord;
 out vec4 fragColor;
 
 uniform sampler2D uTexture;
-uniform sampler2D uLookupTexture;
+uniform sampler2D inputImageTexture1;
 uniform lowp float intensity;
 
 void main() {
@@ -27,8 +28,8 @@ void main() {
     texPos2.x = (quad2.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * textureColor.r);
     texPos2.y = (quad2.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * textureColor.g);
 
-    lowp vec4 newColor1 = texture(uLookupTexture, texPos1);
-    lowp vec4 newColor2 = texture(uLookupTexture, texPos2);
+    lowp vec4 newColor1 = texture(inputImageTexture1, texPos1);
+    lowp vec4 newColor2 = texture(inputImageTexture1, texPos2);
     lowp vec4 newColor = mix(newColor1, newColor2, fract(blueColor));
-    fragColor = mix(textureColor, vec4(newColor.rgb, textureColor.w), intensity);
+    fragColor = mix(textureColor, vec4(newColor.rgb, textureColor.a), intensity);
 }

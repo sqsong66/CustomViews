@@ -157,7 +157,7 @@ public class CustomGestureDetector {
                 }
 
                 if (mIsDragging) {
-                    mListener.onDrag(x, y, dx, dy, ev.getPointerCount());
+                    mListener.onDrag(x, y, dx, dy, ev);
                     mLastTouchX = x;
                     mLastTouchY = y;
 

@@ -15,9 +15,11 @@
  */
 package com.github.chrisbanes.photoview;
 
+import android.view.MotionEvent;
+
 public interface OnGestureListener {
 
-    void onDrag(float x, float y, float dx, float dy, int pointerCount);
+    void onDrag(float x, float y, float dx, float dy, MotionEvent event);
 
     void onFling(float startX, float startY, float velocityX, float velocityY);
 

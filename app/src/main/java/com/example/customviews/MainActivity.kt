@@ -13,6 +13,7 @@ import androidx.media3.common.util.UnstableApi
 import com.example.customviews.databinding.ActivityMainBinding
 import com.example.customviews.ui.AdjustShadowActivity
 import com.example.customviews.ui.BlurImageActivity
+import com.example.customviews.ui.CollegeSampleActivity
 import com.example.customviews.ui.ColorPanelActivity
 import com.example.customviews.ui.DownloadFontSampleActivity
 import com.example.customviews.ui.GLTransitionActivity
@@ -20,7 +21,10 @@ import com.example.customviews.ui.GifMakerActivity
 import com.example.customviews.ui.ImageFilter2Activity
 import com.example.customviews.ui.ImageFilterActivity
 import com.example.customviews.ui.ImageLightOnActivity
+import com.example.customviews.ui.ImageLutActivity
+import com.example.customviews.ui.ImageOutlineActivity
 import com.example.customviews.ui.LUTFilterActivity
+import com.example.customviews.ui.ManualCutoutActivity
 import com.example.customviews.ui.MosaicActivity
 import com.example.customviews.ui.OpenGLFilterActivity
 import com.example.customviews.ui.OpenGLImageVideoFilterActivity
@@ -31,6 +35,7 @@ import com.example.customviews.ui.PatternLockActivity
 import com.example.customviews.ui.RulerSampleActivity
 import com.example.customviews.ui.ScalableImageViewActivity
 import com.example.customviews.ui.ScaleCanvasActivity
+import com.example.customviews.ui.SetPinPatternActivity
 import com.example.customviews.ui.SwapFaceResultActivity
 import com.example.customviews.ui.TurntableActivity
 import com.example.customviews.ui.VideoTransformerActivity
@@ -88,6 +93,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.adjustShadowBtn.setOnClickListener(this)
         binding.lightonBtn.setOnClickListener(this)
         binding.openglRecordBtn.setOnClickListener(this)
+        binding.imageLutBtn.setOnClickListener(this)
+        binding.collageBtn.setOnClickListener(this)
+        binding.imageOutlineBtn.setOnClickListener(this)
+        binding.manualCutoutBtn.setOnClickListener(this)
+        binding.setPinPatternBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -187,8 +197,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.openglRecordBtn -> {
-                // startLaunchImageActivity(10, isMulti = true)
-                startActivity(Intent(this, OpenGLVideoRecordActivity::class.java))
+                startLaunchImageActivity(10, isMulti = true)
+                // startActivity(Intent(this, OpenGLVideoRecordActivity::class.java))
+            }
+
+            R.id.imageLutBtn -> {
+                startLaunchImageActivity(11)
+            }
+
+            R.id.collageBtn -> {
+                // startActivity(Intent(this, CollegeSampleActivity::class.java))
+                startLaunchImageActivity(12, isMulti = true)
+            }
+
+            R.id.imageOutlineBtn -> {
+                startLaunchImageActivity(13)
+            }
+
+            R.id.manualCutoutBtn -> {
+                startActivity(Intent(this, ManualCutoutActivity::class.java))
+            }
+
+            R.id.setPinPatternBtn -> {
+                startActivity(Intent(this, SetPinPatternActivity::class.java))
             }
         }
     }
@@ -270,6 +301,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(Intent(this, OpenGLVideoRecordActivity::class.java).apply {
                     putParcelableArrayListExtra("imageUris", ArrayList(uris))
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                })
+            }
+
+            11 -> {
+                startActivity(Intent(this, ImageLutActivity::class.java).apply {
+                    putExtra("imageUri", uris.firstOrNull())
+                })
+            }
+
+            12 -> {
+                startActivity(Intent(this, CollegeSampleActivity::class.java).apply {
+                    putParcelableArrayListExtra("imageUris", ArrayList(uris))
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                })
+            }
+
+            13 -> {
+                startActivity(Intent(this, ImageOutlineActivity::class.java).apply {
+                    putExtra("imageUri", uris.firstOrNull())
                 })
             }
         }

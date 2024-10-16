@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solution
+    id="template_4_5"
+    type="template"
+    thumb="images/thumb/thumb_template_4_5.png"
+    width="948" height="1250" >
+    
+    <picture 
+        id="temple_bg_00"
+        type="background"
+        src="images/background/bg_01.webp"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="0" top="0"
+        right="948" bottom="1250" />
+    
+    <picture 
+        id="poster_mask_00"
+        type="mask"
+        src="images/mask/mask_rectangle.9.png"
+        hint="images/mask/hint_rectangle.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="24" top="24"
+        right="620" bottom="620" />
+        
+    <picture 
+        id="poster_mask_01"
+        type="mask"
+        src="images/mask/mask_rectangle.9.png"
+        hint="images/mask/hint_rectangle.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="632" top="24"
+        right="924" bottom="620" />
+        
+    <picture 
+        id="poster_mask_02"
+        type="mask"
+        src="images/mask/mask_rectangle.9.png"
+        hint="images/mask/hint_rectangle.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="24" top="631"
+        right="316" bottom="1226" />
+    
+    <picture 
+        id="poster_mask_03"
+        type="mask"
+        src="images/mask/mask_rectangle.9.png"
+        hint="images/mask/hint_rectangle.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="328" top="631"
+        right="924" bottom="1226" />
+    
+</solution>

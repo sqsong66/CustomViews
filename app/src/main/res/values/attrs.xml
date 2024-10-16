@@ -67,6 +67,7 @@
 
     <declare-styleable name="ScalableImageView">
         <attr name="siv_imageSrc" format="reference" />
+        <attr name="siv_isLimitBounds" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="RulerView">
@@ -160,5 +161,75 @@
         <attr name="gv_borderColor" format="color" />
         <attr name="gv_gridWidth" format="dimension" />
         <attr name="gv_gridCount" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="AiTemplateView">
+        <attr name="atv_cornerRadius" format="dimension" />
+        <attr name="atv_borderWidth" format="dimension" />
+        <attr name="atv_borderColor" format="color" />
+        <attr name="atv_checked" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="MosaicSizeView">
+        <attr name="msv_lineWidth" format="dimension" />
+        <attr name="msv_lineColor" format="color" />
+        <attr name="msv_stepColor" format="color" />
+        <attr name="msv_stepCount" format="integer" />
+        <attr name="msv_maxCircleSize" format="dimension" />
+        <attr name="msv_minCircleSize" format="dimension" />
+        <attr name="msv_circleSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="NewManualCutoutView">
+        <attr name="nmcv_brushSize" format="dimension" />
+        <attr name="nmcv_maxBrushSize" format="dimension" />
+        <attr name="nmcv_minBrushSize" format="dimension" />
+        <attr name="nmcv_eraseMaskColor" format="color" />
+        <attr name="nmcv_reserveMaskColor" format="color" />
+        <attr name="nmcv_brushMode" format="enum">
+            <enum name="erase" value="0" />
+            <enum name="reserve" value="1" />
+        </attr>
+        <attr name="nmcv_touchCircleStrokeWidth" format="dimension" />
+        <attr name="nmcv_touchCircleStrokeColor" format="color" />
+        <attr name="nmcv_touchCircleSolidColor" format="color" />
+        <attr name="nmcv_touchPreviewSize" format="dimension" />
+        <attr name="nmcv_touchPreviewStrokeWidth" format="dimension" />
+        <attr name="nmcv_touchPreviewStrokeColor" format="color" />
+        <attr name="nmcv_touchPreviewRadius" format="dimension" />
+        <attr name="nmcv_touchHorizontalMargin" format="dimension" />
+        <attr name="nmcv_touchVerticalMargin" format="dimension" />
+        <attr name="nmcv_dashLineColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="FingerprintScanView">
+        <attr name="fsv_fingerprintRes" format="reference" />
+        <attr name="fsv_fingerprintSize" format="dimension" />
+        <attr name="fsv_fingerprintColor" format="color" />
+        <attr name="fsv_lockRes" format="reference" />
+        <attr name="fsv_lockColor" format="color" />
+        <attr name="fsv_lockSize" format="dimension" />
+        <attr name="fsv_lockBgColor" format="color" />
+        <attr name="fsv_lockPadding" format="dimension" />
+        <attr name="fsv_outerStrokeWidth" format="dimension" />
+        <attr name="fsv_outerStrokeLength" format="dimension" />
+        <attr name="fsv_outerStrokeColor" format="color" />
+        <attr name="fsv_outerStrokeRadius" format="dimension" />
+        <attr name="fsv_iconOuterMargin" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="PinPatternSetView">
+        <attr name="ppsv_setMode" format="enum">
+            <enum name="mode_set" value="0" />
+            <enum name="mode_unlock" value="1" />
+        </attr>
+        <attr name="ppsv_lockRes" format="reference" />
+        <attr name="ppsv_setModeRes" format="reference" />
+        <attr name="ppsv_unlockModeRes" format="reference" />
+        <attr name="ppsv_lockSize" format="dimension" />
+        <attr name="ppsv_modeSize" format="dimension" />
+        <attr name="ppsv_modeColor" format="color" />
+        <attr name="ppsv_modeBgColor" format="color" />
+        <attr name="ppsv_modePadding" format="dimension" />
     </declare-styleable>
 </resources>

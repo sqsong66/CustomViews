@@ -60,7 +60,7 @@ class MultiTextureRender(
         Log.e("sqsong", "onDrawFrame: isStartRecord: $isStartRecord, isRecording: $isRecording, thread: ${Thread.currentThread().name}")
         if (isStartRecord) {
             if (!isRecording) {
-                val config = RecordConfig(context, getVideoPath(context), 720, 1280, EGL14.eglGetCurrentContext())
+                val config = RecordConfig(context, getVideoPath(context), 720, 1280, "audio/music_desert_island.mp3", EGL14.eglGetCurrentContext())
                 Log.d("sqsong", "Start record: $config")
                 videoRecordHelper.startRecord(config)
                 multiTextureFilter.getFrameBufferTexture()?.textureId?.let { textureId ->

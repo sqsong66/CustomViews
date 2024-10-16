@@ -49,7 +49,6 @@ class PhotoAdjustmentLayout(
 
     private val filterAdapter by lazy {
         PhotoAdjustmentAdapter(onItemClick = {
-            // Log.d("PhotoFilterLayout", "onItemClick: $it")
             isClickScroll = true
             updateAdapterCheckedIndex(it)
             scrollPosition(it)
@@ -150,11 +149,9 @@ class PhotoAdjustmentLayout(
     private fun updateAdapterCheckedIndex(position: Int) {
         selectPosition = position
         filterAdapter.updateCheckedIndex(selectPosition)
-        // Log.d("PhotoFilterLayout", "updateAdapterCheckedIndex: $position")
     }
 
     private fun scrollPosition(position: Int) {
-        // Log.w("PhotoFilterLayout", "scrollPosition: $position")
         val smoothScroller = object : LinearSmoothScroller(activity) {
             override fun calculateDtToFit(viewStart: Int, viewEnd: Int, boxStart: Int, boxEnd: Int, snapPreference: Int): Int {
                 val midpoint = (boxStart + boxEnd) / 2  // 计算RecyclerView中心

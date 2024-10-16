@@ -47,7 +47,7 @@ class VideoRecordHelper {
 
     private fun handleStartRecord(recordConfig: RecordConfig) {
         this.recordConfig = recordConfig
-        videoMuxer = VideoMuxer(recordConfig.videoPath, recordConfig.videoWidth, recordConfig.videoHeight)
+        videoMuxer = VideoMuxer(recordConfig.context, recordConfig.audioAssetPath, recordConfig.videoPath, recordConfig.videoWidth, recordConfig.videoHeight)
         videoMuxer?.inputSurface?.let { surface ->
             Log.d("sqsong", "handleStartRecord, surface: $surface")
             eglHelper = EGLHelper(surface, sharedEGLContext = recordConfig.sharedEGLContext)

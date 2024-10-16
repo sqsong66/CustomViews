@@ -117,7 +117,7 @@ class BlurImageView @JvmOverloads constructor(
     }
 
     private val onGestureListener = object : GestureListenerAdapter() {
-        override fun onDrag(x: Float, y: Float, dx: Float, dy: Float, pointerCount: Int) {
+        override fun onDrag(x: Float, y: Float, dx: Float, dy: Float, event: MotionEvent) {
             onViewDrag(dx, dy)
         }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.customviews.view.AiTemplateView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/aiTemplateView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="2dp"
+    android:padding="7dp"
+    android:scaleType="centerCrop"
+    app:atv_borderWidth="2.5dp"
+    app:atv_checked="true"
+    app:atv_cornerRadius="8dp"
+    app:srcCompat="@drawable/thumb_template_2_1" />
+
+

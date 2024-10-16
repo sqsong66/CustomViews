@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution
+    id="poster_4_4"
+    type="poster"
+    thumb="images/thumb/thumb_poster_4_4.webp"
+    width="948" height="1250" >
+    
+    <!-- if src is a 9-patch image, wrapMode will be invalided -->
+    <Picture 
+        id="temple_bg_00"
+        type="background"
+        src="images/background/bg_01.webp"
+        fillPolygon="true"
+        wrapMode="repeat"
+        alpha="255"
+        ratote="0"
+        left="0" top="0"
+        right="948" bottom="1250" />
+        
+    <Picture 
+        id="poster_mask_00"
+        type="mask"
+        src="images/mask/mask_poster_4_4_0.9.png"
+        hint="images/mask/hint_poster_4_4_0.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="29" top="29"
+        right="469" bottom="485" />
+        
+    <Picture 
+        id="poster_mask_01"
+        type="mask"
+        src="images/mask/mask_poster_4_4_1.9.png"
+        hint="images/mask/hint_poster_4_4_1.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="215" top="29"
+        right="919" bottom="485" />
+        
+    <Picture 
+        id="poster_mask_02"
+        type="mask"
+        src="images/mask/mask_poster_4_4_0.9.png"
+        hint="images/mask/hint_poster_4_4_0.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="29" top="494"
+        right="611" bottom="950" />
+        
+    <Picture 
+        id="poster_mask_03"
+        type="mask"
+        src="images/mask/mask_poster_4_4_1.9.png"
+        hint="images/mask/hint_poster_4_4_1.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="357" top="494"
+        right="919" bottom="950" />
+        
+    <Picture 
+        id="poster_fg_00"
+        type="foreground"
+        src="images/foreground/fg_4_4_0.webp"
+        fillPolygon="false"
+        alpha="255"
+        ratote="0"
+        left="531" top="29"
+        right="919" bottom="485" />
+    
+    <Picture 
+        id="poster_fg_01"
+        type="foreground"
+        src="images/foreground/fg_4_4_1.webp"
+        fillPolygon="false"
+        alpha="255"
+        ratote="0"
+        left="42" top="1038"
+        right="511" bottom="1220" />
+    
+</Solution>

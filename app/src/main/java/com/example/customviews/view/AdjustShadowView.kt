@@ -17,7 +17,6 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.graphics.applyCanvas
-import com.example.customviews.utils.ext.matrixRotateDegree
 import com.example.customviews.utils.ext.matrixScaleX
 import com.example.customviews.utils.ext.matrixScaleY
 import com.github.chrisbanes.photoview.CustomGestureDetector
@@ -76,12 +75,12 @@ class AdjustShadowView @JvmOverloads constructor(
     }
 
     private val onGestureListener = object : GestureListenerAdapter() {
-        override fun onDrag(x: Float, y: Float, dx: Float, dy: Float, pointerCount: Int) {
-            onViewDrag(x, y, dx, dy, pointerCount)
+        override fun onDrag(x: Float, y: Float, dx: Float, dy: Float, event: MotionEvent) {
+            onViewDrag(x, y, dx, dy, event)
         }
 
         override fun onFling(startX: Float, startY: Float, velocityX: Float, velocityY: Float) {
-            // onViewFling(startX, startY, velocityX, velocityY)
+
         }
 
         override fun onScale(scaleFactor: Float, focusX: Float, focusY: Float) {
@@ -89,7 +88,7 @@ class AdjustShadowView @JvmOverloads constructor(
         }
 
         override fun onScale(scaleFactor: Float, focusX: Float, focusY: Float, dx: Float, dy: Float) {
-            // onViewScale(scaleFactor, focusX, focusY, dx, dy)
+
         }
     }
 
@@ -125,7 +124,7 @@ class AdjustShadowView @JvmOverloads constructor(
         return true
     }
 
-    private fun onViewDrag(x: Float, y: Float, dx: Float, dy: Float, pointerCount: Int) {
+    private fun onViewDrag(x: Float, y: Float, dx: Float, dy: Float, event: MotionEvent) {
         if (isMoveMode) { // 移动图片
             shadowMatrix.postTranslate(dx, dy)
             shadowMatrix.mapRect(tempRect, imageRect)
@@ -235,7 +234,7 @@ class AdjustShadowView @JvmOverloads constructor(
         Log.d("songmao", "updateShadowBitmap: bitmap = $bitmap")
         if (bitmap != null) {
             shadowBitmap = bitmap
-            onViewDrag(0f, 0f, 0f, 0f, 0)
+            onViewDrag(0f, 0f, 0f, 0f, MotionEvent.obtain(0, 0, MotionEvent.ACTION_DOWN, 0f, 0f, 0))
             invalidate()
         }
     }

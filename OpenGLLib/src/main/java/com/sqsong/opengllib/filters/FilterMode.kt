@@ -11,7 +11,8 @@ import androidx.annotation.IntDef
     FilterMode.FILTER_SHADOW,
     FilterMode.FILTER_TEMPERATURE,
     FilterMode.FILTER_SHARPNESS,
-    FilterMode.FILTER_VIGNETTE
+    FilterMode.FILTER_VIGNETTE,
+    FilterMode.FILTER_TINT
 )
 @Retention(AnnotationRetention.SOURCE)
 annotation class FilterMode {
@@ -25,5 +26,6 @@ annotation class FilterMode {
         const val FILTER_TEMPERATURE = 6
         const val FILTER_SHARPNESS = 7
         const val FILTER_VIGNETTE = 8
+        const val FILTER_TINT = 9
     }
 }

@@ -10,6 +10,8 @@ void main() {
     float kernel[9];
     vec2 tex_offset = 1.0 / vec2(textureSize(uTexture, 0)); // 显式类型转换，保证类型匹配
 
+    lowp vec4 source = texture(uTexture, fTexCoord);
+
     // 使用锐化强度参数调整锐化内核
     kernel[0] = 0.0; kernel[1] = -1.0 * strength; kernel[2] = 0.0;
     kernel[3] = -1.0 * strength; kernel[4] = 4.0 * strength + 1.0; kernel[5] = -1.0 * strength;
@@ -22,5 +24,7 @@ void main() {
             color += sampleTex * kernel[i * 3 + j];
         }
     }
-    fragColor = vec4(color, 1.0);
+
+    color *= source.a;
+    fragColor = vec4(color, source.a);
 }

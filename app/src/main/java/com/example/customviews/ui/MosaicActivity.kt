@@ -9,6 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.customviews.databinding.ActivityMosaicBinding
 import com.example.customviews.utils.decodeBitmapByGlide
 import com.example.customviews.utils.dp2Px
+import com.example.customviews.view.OnMosaicSizeProgressListener
+import com.example.customviews.view.TouchType
 import com.example.customviews.view.pixelate.Pixelate
 import com.example.customviews.view.pixelate.PixelateLayer
 import com.sqsong.opengl.processor.EglBuffer
@@ -35,6 +37,11 @@ class MosaicActivity : AppCompatActivity() {
         binding.previewImageView.setOnClickListener { binding.previewImageView.visibility = View.GONE }
         binding.showPreviewButton.setOnClickListener { showPreview() }
         binding.clearMosaicButton.setOnClickListener { binding.mosaicView.clearMosaic() }
+        binding.mosaicSizeView.setOnMosaicSizeProgressListener(object : OnMosaicSizeProgressListener {
+            override fun onSizeProgressChanged(progress: Float, @TouchType touchType: Int) {
+                Log.d("songmao", "progress: $progress")
+            }
+        })
     }
 
     private fun initImageBitmap(imageUri: Uri) {

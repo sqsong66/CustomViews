@@ -100,7 +100,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
 
     private final OnGestureListener onGestureListener = new GestureListenerAdapter() {
         @Override
-        public void onDrag(float x, float y, float dx, float dy, int pointerCount) {
+        public void onDrag(float x, float y, float dx, float dy, MotionEvent event) {
             if (mScaleDragDetector.isScaling()) {
                 return; // Do not drag if we are already scaling
             }

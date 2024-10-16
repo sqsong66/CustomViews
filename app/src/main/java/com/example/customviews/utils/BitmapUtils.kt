@@ -120,6 +120,28 @@ fun decodeResourceBitmapToSize(context: Context, resId: Int, size: Size = Size(7
     return destBitmap
 }
 
+fun decodeImageUriBitmapToSize(context: Context, imageUri: Uri, size: Size = Size(720, 1280), maxSize: Int = 4096): Bitmap? {
+    val bitmap = decodeBitmapByGlide(context, imageUri, maxSize) ?: return null
+    if (bitmap.width == size.width && bitmap.height == size.height) {
+        return bitmap
+    }
+    // 根据宽高比缩放图片，然后沿中心裁剪
+    val sRatio = size.width.toFloat() / size.height
+    val bRatio = bitmap.width.toFloat() / bitmap.height
+    val scale = if (sRatio > bRatio) {
+        size.width.toFloat() / bitmap.width
+    } else {
+        size.height.toFloat() / bitmap.height
+    }
+    val matrix = Matrix().apply { postScale(scale, scale) }
+    val scaledBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    val x = (scaledBitmap.width - size.width) / 2
+    val y = (scaledBitmap.height - size.height) / 2
+    val destBitmap = Bitmap.createBitmap(scaledBitmap, x, y, size.width, size.height)
+    scaledBitmap.recycle()
+    return destBitmap
+}
+
 fun decodeBitmapFromUri(context: Context, uri: Uri?, maxSize: Int): Bitmap? {
     uri ?: return null
     return try {

@@ -8,6 +8,7 @@ import com.sqsong.opengllib.common.FrameBuffer
 import com.sqsong.opengllib.common.GLVertexLinker
 import com.sqsong.opengllib.common.Program
 import com.sqsong.opengllib.common.Texture
+import com.sqsong.opengllib.egl.checkGlError
 import com.sqsong.opengllib.utils.ext.readAssetsText
 
 open class BaseImageFilter(
@@ -50,6 +51,7 @@ open class BaseImageFilter(
 
     // 屏幕着色器程序
     private var screenProgram: Program? = null
+
     // 屏幕着色器顶点数据链接器
     private val screenVertexLinker by lazy {
         GLVertexLinker(vertTexCoords, vertIndices, 5 * 4)
@@ -57,8 +59,10 @@ open class BaseImageFilter(
 
     // 离屏渲染着色器程序
     private var fboProgram: Program? = null
+
     // 离屏渲染帧缓冲区
     private var frameBuffer: FrameBuffer? = null
+
     // 离屏渲染顶点数据链接器
     private val fboVertexLinker by lazy {
         GLVertexLinker(fboVertTexCoords, vertIndices, 5 * 4)
@@ -82,6 +86,7 @@ open class BaseImageFilter(
         fboProgram = Program.of(fboVertexShader, fboFragmentShader).apply {
             onInitialized(this)
         }
+        checkGlError("onInit")
         isInitialized = true
     }
 
@@ -125,10 +130,8 @@ open class BaseImageFilter(
     }
 
     open fun onDrawFrame(inputTexture: Texture) {
-        // Log.w("BaseImageFilter", "$TAG onDrawFrame, thread: ${Thread.currentThread().name}")
-
         // 绑定离屏缓冲区的program
-         fboProgram?.use()
+        fboProgram?.use()
         // 在离屏缓冲区处理前先将纹理交给底下的子类来进行处理，比如高斯模糊的横向模糊，横向模糊完后，将处理的纹理交给
         // 当前的离屏缓冲区来进行进一步的纵向模糊处理
         onBeforeFrameBufferDraw(inputTexture, fboProgram, fboVertexLinker)?.let { processTexture ->
@@ -136,13 +139,16 @@ open class BaseImageFilter(
             frameBuffer?.bindFrameBuffer()
             GLES30.glViewport(0, 0, processTexture.textureWidth, processTexture.textureHeight)
             onBindTexture(processTexture)
+            // 在离屏缓冲区绘制前的操作，如设置shader中的uniform变量等参数
+            fboProgram?.let { onPreDraw(it, inputTexture) }
             fboVertexLinker.draw()
             processTexture.unbindTexture()
+            // 在离屏缓冲区绘制后的操作，如解绑纹理等
             onAfterDraw()
             frameBuffer?.unbindFrameBuffer()
         }
 
-        // 离屏缓冲区处理完成后，将离屏缓冲区处理完的纹理交给默认缓冲来输出到屏幕
+        // 离屏缓冲区处理完成后，将离谱缓冲区处理完的纹理交给默认缓冲来输出到屏幕
         if (initOutputBuffer) drawTextureOnScreen(frameBuffer?.texture)
     }
 
@@ -156,12 +162,8 @@ open class BaseImageFilter(
 
     private fun onBindTexture(texture: Texture) {
         fboProgram?.getUniformLocation("uTexture")?.let {
-            // Log.d("BaseImageFilter", "$TAG onBindTexture, viewWidth: $viewWidth, viewHeight: $viewHeight, textureId: ${texture.textureId}, uTexture location: $it")
-            GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
-            texture.bindTexture()
-            GLES30.glUniform1i(it, 0)
+            texture.bindTexture(it)
         }
-        fboProgram?.let { onPreDraw(it, texture) }
     }
 
     private fun onBindScreenTexture(texture: Texture?, width: Int, height: Int) {

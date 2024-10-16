@@ -30,10 +30,11 @@ abstract class Texture(
 
     abstract fun onTextureCreated()
 
-    fun bindTexture(slot: Int = 0) {
+    fun bindTexture(location: Int, slot: Int = 0) {
         if (textureId == NO_TEXTURE) create()
         GLES30.glActiveTexture(GLES30.GL_TEXTURE0 + slot)
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textureId)
+        GLES30.glUniform1i(location, slot)
     }
 
     fun unbindTexture() {

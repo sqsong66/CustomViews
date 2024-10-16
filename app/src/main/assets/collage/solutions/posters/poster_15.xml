@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution
+    id="poster_4_2"
+    type="poster"
+    thumb="images/thumb/thumb_poster_4_2.webp"
+    width="948" height="1250" >
+    
+    <!-- if src is a 9-patch image, wrapMode will be invalided -->
+    <Picture 
+        id="temple_bg_00"
+        type="background"
+        src="images/background/bg_01.webp"
+        fillPolygon="true"
+        wrapMode="repeat"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="0" top="0"
+        right="948" bottom="1250" />
+
+    <Picture 
+        id="poster_mask_00"
+        type="mask"
+        src="images/mask/mask_poster_4_2_1.webp"
+        hint="images/mask/hint_poster_4_2_1.webp"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="0" top="0"
+        right="948" bottom="619" />
+
+    <Picture 
+        id="poster_mask_01"
+        type="mask"
+        src="images/mask/mask_poster_4_2_2.webp"
+        hint="images/mask/hint_poster_4_2_2.webp"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="480" top="157"
+        right="948" bottom="1093" />
+
+    <Picture 
+        id="poster_mask_02"
+        type="mask"
+        src="images/mask/mask_poster_4_2_3.webp"
+        hint="images/mask/hint_poster_4_2_3.webp"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="0" top="631"
+        right="948" bottom="1250" />
+
+    <Picture 
+        id="poster_mask_03"
+        type="mask"
+        src="images/mask/mask_poster_4_2_4.webp"
+        hint="images/mask/hint_poster_4_2_4.webp"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="0" top="157"
+        right="468" bottom="1093" />
+
+    <Picture 
+        id="poster_fg_00"
+        type="foreground"
+        src="images/foreground/fg_4_2_1.webp"
+        fillPolygon="false"
+        alpha="255"
+        ratote="0"
+        depth="10"
+        left="426" top="313"
+        right="522" bottom="445" />
+
+    <Picture 
+        id="poster_fg_01"
+        type="foreground"
+        src="images/foreground/fg_4_2_2.webp"
+        fillPolygon="false"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="659" top="559"
+        right="755" bottom="691" />
+
+    <Picture 
+        id="poster_fg_02"
+        type="foreground"
+        src="images/foreground/fg_4_2_3.webp"
+        fillPolygon="false"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="417" top="807"
+        right="531" bottom="939" />
+
+    <Picture 
+        id="poster_fg_03"
+        type="foreground"
+        src="images/foreground/fg_4_2_4.webp"
+        fillPolygon="false"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="185" top="559"
+        right="299" bottom="691" />
+</Solution>

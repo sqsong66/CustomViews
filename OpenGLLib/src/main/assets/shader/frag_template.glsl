@@ -33,6 +33,7 @@ float holdEase(float t, float holdRatio) {
 
 // Insert your transition function here
 
+
 void main() {
     adjustedProgress = holdEase(progress, holdRatio);
     outColor = transition(fTexCoord);

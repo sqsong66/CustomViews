@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Collage>
+    <!-- AssetManager.list() is too slow to scan Assets Folder, so we list solution here -->
+    <Solutions>
+        <Template>
+            <item id="template_00" src="solutions/templates/template_00.xml" />
+            <item id="template_01" src="solutions/templates/template_01.xml" />
+            <item id="template_02" src="solutions/templates/template_02.xml" />
+            <item id="template_03" src="solutions/templates/template_03.xml" />
+            <item id="template_04" src="solutions/templates/template_04.xml" />
+            <item id="template_05" src="solutions/templates/template_05.xml" />
+            <item id="template_06" src="solutions/templates/template_06.xml" />
+            <item id="template_07" src="solutions/templates/template_07.xml" />
+            <item id="template_08" src="solutions/templates/template_08.xml" />
+            <item id="template_09" src="solutions/templates/template_09.xml" />
+            <item id="template_10" src="solutions/templates/template_10.xml" />
+            <item id="template_11" src="solutions/templates/template_11.xml" />
+            <item id="template_12" src="solutions/templates/template_12.xml" />
+            <item id="template_13" src="solutions/templates/template_13.xml" />
+            <item id="template_14" src="solutions/templates/template_14.xml" />
+            <item id="template_15" src="solutions/templates/template_15.xml" />
+            <item id="template_16" src="solutions/templates/template_16.xml" />
+            <item id="template_17" src="solutions/templates/template_17.xml" />
+            <item id="template_18" src="solutions/templates/template_18.xml" />
+            <item id="template_19" src="solutions/templates/template_19.xml" />
+            <item id="template_20" src="solutions/templates/template_20.xml" />
+            <item id="template_21" src="solutions/templates/template_21.xml" />
+            <item id="template_22" src="solutions/templates/template_22.xml" />
+            <item id="template_23" src="solutions/templates/template_23.xml" />
+            <item id="template_24" src="solutions/templates/template_24.xml" />
+            <item id="template_25" src="solutions/templates/template_25.xml" />
+            <item id="template_26" src="solutions/templates/template_26.xml" />
+            <item id="template_27" src="solutions/templates/template_27.xml" />
+            <item id="template_28" src="solutions/templates/template_28.xml" />
+            <item id="template_29" src="solutions/templates/template_29.xml" />
+            <item id="template_30" src="solutions/templates/template_30.xml" />
+            <item id="template_31" src="solutions/templates/template_31.xml" />
+            <item id="template_32" src="solutions/templates/template_32.xml" />
+            <item id="template_33" src="solutions/templates/template_33.xml" />
+        </Template>
+        <Poster>
+            <item id="poster_00" src="solutions/posters/poster_00.xml" />
+            <item id="poster_01" src="solutions/posters/poster_01.xml" />
+            <item id="poster_02" src="solutions/posters/poster_02.xml" />
+            <item id="poster_03" src="solutions/posters/poster_03.xml" />
+            <item id="poster_04" src="solutions/posters/poster_04.xml" />
+            <item id="poster_05" src="solutions/posters/poster_05.xml" />
+            <item id="poster_06" src="solutions/posters/poster_06.xml" />
+            <item id="poster_07" src="solutions/posters/poster_07.xml" />
+            <item id="poster_08" src="solutions/posters/poster_08.xml" />
+            <item id="poster_09" src="solutions/posters/poster_09.xml" />
+            <item id="poster_10" src="solutions/posters/poster_10.xml" />
+            <item id="poster_11" src="solutions/posters/poster_11.xml" />
+            <item id="poster_12" src="solutions/posters/poster_12.xml" />
+            <item id="poster_13" src="solutions/posters/poster_13.xml" />
+            <item id="poster_14" src="solutions/posters/poster_14.xml" />
+            <item id="poster_15" src="solutions/posters/poster_15.xml" />
+            <item id="poster_16" src="solutions/posters/poster_16.xml" />
+            <item id="poster_17" src="solutions/posters/poster_17.xml" />
+            <item id="poster_18" src="solutions/posters/poster_18.xml" />
+            <item id="poster_19" src="solutions/posters/poster_19.xml" />
+            <item id="poster_20" src="solutions/posters/poster_20.xml" />
+            <item id="poster_21" src="solutions/posters/poster_21.xml" />
+            <item id="poster_22" src="solutions/posters/poster_22.xml" />
+            <item id="poster_23" src="solutions/posters/poster_23.xml" />
+            <item id="poster_24" src="solutions/posters/poster_24.xml" />
+            <item id="poster_25" src="solutions/posters/poster_25.xml" />
+            <item id="poster_26" src="solutions/posters/poster_26.xml" />
+            <item id="poster_27" src="solutions/posters/poster_27.xml" />
+            <item id="poster_28" src="solutions/posters/poster_28.xml" />
+            <item id="poster_29" src="solutions/posters/poster_29.xml" />
+            <item id="poster_30" src="solutions/posters/poster_30.xml" />
+            <item id="poster_31" src="solutions/posters/poster_31.xml" />
+            <item id="poster_32" src="solutions/posters/poster_32.xml" />
+            <item id="poster_33" src="solutions/posters/poster_33.xml" />
+            <item id="poster_34" src="solutions/posters/poster_34.xml" />
+            <item id="poster_35" src="solutions/posters/poster_35.xml" />
+            <item id="poster_36" src="solutions/posters/poster_36.xml" />
+            <item id="poster_37" src="solutions/posters/poster_37.xml" />
+        </Poster>
+        <Join>
+            <item id="join_vertical" src="solutions/joins/join_vertical.xml" />
+            <item id="join_00" src="solutions/joins/join_00.xml" />
+            <item id="join_01" src="solutions/joins/join_01.xml" />
+            <item id="join_02" src="solutions/joins/join_02.xml" />
+            <item id="join_03" src="solutions/joins/join_03.xml" />
+            <item id="join_04" src="solutions/joins/join_04.xml" />
+            <item id="join_05" src="solutions/joins/join_05.xml" />
+            <item id="join_06" src="solutions/joins/join_06.xml" />
+        </Join>
+        <Free></Free>
+    </Solutions>
+</Collage>

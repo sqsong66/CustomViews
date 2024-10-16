@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    tools:context=".ui.ManualCutoutActivity"
+    tools:ignore="HardcodedText">
+
+    <com.example.customviews.view.NewManualCutoutView
+        android:id="@+id/manualCutoutView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomCardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:nmcv_touchVerticalMargin="40dp"
+        app:siv_isLimitBounds="false" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomCardView"
+        style="@style/TopRoundedCardStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/doneBtn"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Done"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toTopOf="@id/smearingMethodRg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/undoIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ripple_circle_40dp"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/doneBtn"
+                app:layout_constraintEnd_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@id/doneBtn"
+                app:srcCompat="@drawable/ic_undo"
+                app:tint="@color/color_undo_redo" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/redoIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/ripple_circle_40dp"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/doneBtn"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@id/doneBtn"
+                app:srcCompat="@drawable/ic_redo"
+                app:tint="@color/color_undo_redo" />
+
+            <RadioGroup
+                android:id="@+id/smearingMethodRg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginBottom="16dp"
+                android:checkedButton="@id/brushRb"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/bottomLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/brushRb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/cutout_ic_brush"
+                    android:drawablePadding="8dp"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:paddingVertical="4dp"
+                    android:text="Brush"
+                    android:textColor="@color/color_cutout_radio"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/color_cutout_radio" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/lassoRb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/cutout_ic_lasso"
+                    android:drawablePadding="8dp"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:paddingVertical="4dp"
+                    android:text="Lasso"
+                    android:textColor="@color/color_cutout_radio"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/color_cutout_radio" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rectangleRb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/cutout_ic_rectangle"
+                    android:drawablePadding="8dp"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:paddingVertical="4dp"
+                    android:text="Rectangle"
+                    android:textColor="@color/color_cutout_radio"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/color_cutout_radio" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/polygonRb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/cutout_ic_polygon"
+                    android:drawablePadding="8dp"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:paddingVertical="4dp"
+                    android:text="Polygon"
+                    android:textColor="@color/color_cutout_radio"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:drawableTint="@color/color_cutout_radio" />
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/bottomLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/resetRb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:buttonTint="@color/color_cutout_radio"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_erase"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="@color/color_cutout_radio"
+                    android:enabled="false"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="8dp"
+                    android:text="Reset"
+                    android:textColor="@color/color_cutout_radio" />
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="10dp" />
+
+                <RadioGroup
+                    android:id="@+id/operationRg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:checkedButton="@id/eraserRb"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/eraserRb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:buttonTint="@color/color_cutout_radio"
+                        android:drawableTop="@drawable/ic_erase"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/color_cutout_radio"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="8dp"
+                        android:text="擦除"
+                        android:textColor="@color/color_cutout_radio" />
+
+                    <View
+                        android:layout_width="16dp"
+                        android:layout_height="10dp" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/restorerRb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:buttonTint="@color/color_cutout_radio"
+                        android:checked="false"
+                        android:drawableTop="@drawable/ic_restore"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/color_cutout_radio"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="8dp"
+                        android:text="保留"
+                        android:textColor="@color/color_cutout_radio" />
+                </RadioGroup>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/polygonApplyLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_polygon_menu"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomCardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/polygonUndoTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_rounded_8dp"
+            android:enabled="false"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Undo"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            android:textColor="@color/color_polygon_menu" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="16dp"
+            android:alpha="0.3"
+            android:background="?attr/colorOnPrimary" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/polygonApplyTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_rounded_8dp"
+            android:enabled="false"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Apply"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            android:textColor="@color/color_polygon_menu" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/brushSizeSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomCardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/previewImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface"
+        android:visibility="gone" />
+</androidx.constraintlayout.widget.ConstraintLayout>

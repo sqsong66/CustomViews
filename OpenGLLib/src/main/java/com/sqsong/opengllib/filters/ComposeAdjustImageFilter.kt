@@ -18,40 +18,25 @@ class ComposeAdjustImageFilter(
         SaturationImageFilter(context, initOutputBuffer = false)
     }
 
-    private val exposureImageFilter by lazy {
-        ExposureImageFilter(context, initOutputBuffer = false)
+    private val highlightShadowImageFilter by lazy {
+        HighlightShadowFilter(context, initOutputBuffer = false)
     }
 
-    private val highlightImageFilter by lazy {
-        HighlightImageFilter(context, initOutputBuffer = false)
-    }
-
-    private val shadowImageFilter by lazy {
-        ShadowImageFilter(context, initOutputBuffer = false)
-    }
-
-    private val temperatureImageFilter by lazy {
-        ColorTemperatureImageFilter(context, initOutputBuffer = false)
+    private val temperatureTintImageFilter by lazy {
+        TemperatureTintFilter(context, initOutputBuffer = false)
     }
 
     private val sharpenImageFilter by lazy {
         SharpenImageFilter(context, initOutputBuffer = false)
     }
 
-    private val vignetteImageFilter by lazy {
-        VignetteImageFilter(context, initOutputBuffer = false)
-    }
-
     init {
         addFilter(brightnessImageFilter)
+        addFilter(temperatureTintImageFilter)
         addFilter(contrastImageFilter)
         addFilter(saturationImageFilter)
-        addFilter(exposureImageFilter)
-        addFilter(highlightImageFilter)
-        addFilter(shadowImageFilter)
-        addFilter(temperatureImageFilter)
+        addFilter(highlightShadowImageFilter)
         addFilter(sharpenImageFilter)
-        addFilter(vignetteImageFilter)
     }
 
     override fun setProgress(progress: Float, extraType: Int) {
@@ -59,29 +44,33 @@ class ComposeAdjustImageFilter(
             FilterMode.FILTER_BRIGHTNESS -> {
                 brightnessImageFilter.setProgress(progress, extraType)
             }
+
+            FilterMode.FILTER_TEMPERATURE -> {
+                temperatureTintImageFilter.setProgress(progress, extraType)
+            }
+
             FilterMode.FILTER_CONTRAST -> {
                 contrastImageFilter.setProgress(progress, extraType)
             }
+
             FilterMode.FILTER_SATURATION -> {
                 saturationImageFilter.setProgress(progress, extraType)
             }
-            FilterMode.FILTER_EXPOSURE -> {
-                exposureImageFilter.setProgress(progress, extraType)
-            }
+
             FilterMode.FILTER_HIGHLIGHT -> {
-                highlightImageFilter.setProgress(progress, extraType)
+                highlightShadowImageFilter.setProgress(progress, extraType)
             }
+
             FilterMode.FILTER_SHADOW -> {
-                shadowImageFilter.setProgress(progress, extraType)
+                highlightShadowImageFilter.setProgress(progress, extraType)
             }
-            FilterMode.FILTER_TEMPERATURE -> {
-                temperatureImageFilter.setProgress(progress, extraType)
-            }
+
             FilterMode.FILTER_SHARPNESS -> {
                 sharpenImageFilter.setProgress(progress, extraType)
             }
-            FilterMode.FILTER_VIGNETTE -> {
-                vignetteImageFilter.setProgress(progress, extraType)
+
+            FilterMode.FILTER_TINT -> {
+                temperatureTintImageFilter.setProgress(progress, extraType)
             }
         }
     }

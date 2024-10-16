@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution
+    id="poster_3_1"
+    type="poster"
+    thumb="images/thumb/thumb_poster_3_1.webp"
+    width="948" height="1250" >
+    
+    <!-- if src is a 9-patch image, wrapMode will be invalided -->
+    <Picture 
+        id="temple_bg_00"
+        type="background"
+        src="images/background/bg_01.webp"
+        fillPolygon="true"
+        wrapMode="repeat"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="0" top="0"
+        right="948" bottom="1250" />
+
+    <Picture 
+        id="poster_mask_00"
+        type="mask"
+        src="images/mask/mask_rectangle.9.png"
+        hint="images/mask/hint_rectangle.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="15" top="15"
+        right="522" bottom="824" />
+
+    <Picture 
+        id="poster_mask_01"
+        type="mask"
+        src="images/mask/mask_rectangle.9.png"
+        hint="images/mask/hint_rectangle.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="535" top="15"
+        right="933" bottom="413" />
+
+    <Picture 
+        id="poster_mask_02"
+        type="mask"
+        src="images/mask/mask_rectangle.9.png"
+        hint="images/mask/hint_rectangle.9.png"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="535" top="426"
+        right="933" bottom="1230" />
+
+    <Picture 
+        id="poster_fg_00"
+        type="foreground"
+        src="images/foreground/fg_3_1_0.webp"
+        fillPolygon="false"
+        alpha="255"
+        ratote="0"
+        depth="10"
+        left="794" top="1104"
+        right="908" bottom="1192" />
+
+    <Picture 
+        id="poster_fg_01"
+        type="foreground"
+        src="images/foreground/fg_3_1_1.webp"
+        fillPolygon="false"
+        alpha="255"
+        ratote="0"
+        depth="0"
+        left="122" top="874"
+        right="408" bottom="1198" />
+
+</Solution>

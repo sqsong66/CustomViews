@@ -1,4 +1,4 @@
-package com.sqsong.photoeditor.view.anno
+package com.example.customviews.view.anno
 
 import androidx.annotation.IntDef
 

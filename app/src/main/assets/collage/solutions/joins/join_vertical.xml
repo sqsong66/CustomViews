@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution
+    id="join_vertical"
+    type="join"
+    thumb="images/thumb/thumb_join_vertical.webp"
+    width="948" >
+
+    <PictureArea
+        id="join_user_set"
+        type="vertical"
+        src=""
+        backgroundColor="#FFFFFFFF"
+        alpha="255"
+        paddingLeft="-1" paddingRight="-1"
+        paddingTop="-1" paddingBottom="-1"
+        spacing="0" />
+</Solution>

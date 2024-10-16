@@ -9,7 +9,9 @@
     <com.example.customviews.view.MosaicView
         android:id="@+id/mosaicView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mosaicSizeView" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/showPreviewButton"
@@ -17,16 +19,28 @@
         android:layout_height="wrap_content"
         android:text="Show Preview"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/clearMosaicButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Clear Mosiac"
+        android:text="Clear Mosaic"
         app:layout_constraintStart_toEndOf="@id/showPreviewButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <com.example.customviews.view.MosaicSizeView
+        android:id="@+id/mosaicSizeView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/showPreviewButton" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/previewImageView"

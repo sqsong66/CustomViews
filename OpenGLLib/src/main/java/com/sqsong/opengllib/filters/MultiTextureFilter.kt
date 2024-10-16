@@ -16,7 +16,7 @@ open class MultiTextureFilter(
     private val context: Context,
     private val vertexAssets: String = "shader/no_filter_ver.vert",
     private vararg val fragmentAssets: String = arrayOf(
-       /* "shader/frag_cube.glsl",*/
+        /*"shader/frag_windowbinds.glsl",*/
        "shader/frag_glitch_memories.glsl", "shader/frag_water_drop.glsl",
         "shader/frag_polka_dots_curtain.glsl", "shader/frag_grid_flip.glsl",
         "shader/frag_flyeye.glsl", "shader/frag_doorway.glsl",
@@ -31,9 +31,9 @@ open class MultiTextureFilter(
     // "shader/frag_stereo_viewer.glsl"
 ) {
 
+    private var isInitialized = false
     private var viewSize = Size(0, 0)
     private var inputTextureSize = Size(0, 0)
-    private var isInitialized = false
     private val mvpMatrix = FloatArray(16)
     private val viewMatrix = FloatArray(16)
     private val modelMatrix = FloatArray(16)
@@ -78,7 +78,7 @@ open class MultiTextureFilter(
     private var programIndex = 0
     private var frameIndex = 0
     private var loopCount = 0
-    private val LOOP_COUNT = 400
+    private val LOOP_COUNT = 200
     private val random by lazy { Random() }
 
     /**
@@ -137,55 +137,61 @@ open class MultiTextureFilter(
     fun onDrawFrame(textures: List<Texture>) {
         if (!isInitialized) return
         frameIndex++
+        // 计算gl-transition变化进度
         val progress = (frameIndex % LOOP_COUNT).toFloat() / LOOP_COUNT
         if (frameIndex % LOOP_COUNT == 0) {
             loopCount++
-
+            // 随机切换特效着色器
             programIndex = random.nextInt(fboPrograms.size)
             fboProgram = fboPrograms.getOrNull(programIndex % fboPrograms.size)
         }
 
+        // 开启离屏渲染
         fboProgram?.use()
         frameBuffer?.bindFrameBuffer()
         GLES30.glViewport(0, 0, inputTextureSize.width, inputTextureSize.height)
 
+        // 获取到开始变换的图片纹理，并将其设置给着色器程序
         val inputTexture = textures[loopCount % textures.size]
         fboProgram?.getUniformLocation("uTexture0")?.let {
-            inputTexture.bindTexture(0)
-            GLES30.glUniform1i(it, 0)
+            inputTexture.bindTexture(it, 0)
         }
         fboProgram?.getUniformLocation("texture0Size")?.let {
             GLES30.glUniform2f(it, inputTexture.textureWidth.toFloat(), inputTexture.textureHeight.toFloat())
         }
 
+        // 获取到目的(下一张)图片纹理，并将其设置给着色器程序
         val nextTexture = textures[(loopCount + 1) % textures.size]
         fboProgram?.getUniformLocation("uTexture1")?.let {
-            nextTexture.bindTexture(1)
-            GLES30.glUniform1i(it, 1)
+            nextTexture.bindTexture(it, 1)
         }
         fboProgram?.getUniformLocation("texture1Size")?.let {
             GLES30.glUniform2f(it, nextTexture.textureWidth.toFloat(), nextTexture.textureHeight.toFloat())
         }
 
+        // 设置gl-transition变换进度
         fboProgram?.getUniformLocation("progress")?.let {
             GLES30.glUniform1f(it, progress)
         }
 
+        // 设置纹理尺寸
         fboProgram?.getUniformLocation("resolution")?.let {
             GLES30.glUniform2f(it, inputTextureSize.width.toFloat(), inputTextureSize.height.toFloat())
         }
 
+        // 设置gl-transition变换时长占图片显示总时长的百分比
         fboProgram?.getUniformLocation("textureStayRatio")?.let {
             GLES30.glUniform1f(it, 0.4f)
         }
 
+        // 渲染纹理
         fboVertexLinker.draw()
         inputTexture.unbindTexture()
         nextTexture.unbindTexture()
         frameBuffer?.unbindFrameBuffer()
 
+        // 绘制到屏幕上
         drawTextureOnScreen(frameBuffer?.texture)
-        Log.d("sqsong", "textureId: ${frameBuffer?.texture?.textureId}")
     }
 
     private fun drawTextureOnScreen(texture: Texture?) {
@@ -246,5 +252,4 @@ open class MultiTextureFilter(
         fboVertexLinker.cleanup()
         isInitialized = false
     }
-
 }

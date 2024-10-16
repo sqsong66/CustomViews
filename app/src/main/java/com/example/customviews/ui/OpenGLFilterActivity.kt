@@ -9,10 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.customviews.databinding.ActivityOpenGlfilterBinding
 import com.example.customviews.utils.decodeBitmapByGlide
+import com.example.customviews.utils.getLutFilterData
 import com.sqsong.opengllib.filters.BaseImageFilter
-import com.sqsong.opengllib.filters.GaussianBlurImageFilter
-import com.sqsong.opengllib.filters.HexagonMosaicFilter
+import com.sqsong.opengllib.filters.BlurImageFilter
+import com.sqsong.opengllib.filters.TestImageFilter
+import com.wangxutech.picwish.libnative.NativeLib
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -22,8 +25,8 @@ class OpenGLFilterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOpenGlfilterBinding
 
-    private val imageFilter by lazy {
-        HexagonMosaicFilter(this)
+    private val blurImageFilter by lazy {
+        BlurImageFilter(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,15 +48,19 @@ class OpenGLFilterActivity : AppCompatActivity() {
         binding.previewImage.setOnClickListener {
             binding.previewImage.visibility = View.GONE
         }
+
+        // applyFilter()
+        binding.glSurfaceView.setFilter(blurImageFilter)
     }
 
     private fun loadImage(imageUri: Uri) {
         flow {
-            decodeBitmapByGlide(this@OpenGLFilterActivity, imageUri, 2048)?.let { emit(it) }
+            decodeBitmapByGlide(this@OpenGLFilterActivity, imageUri, 2048)?.let {
+                emit(it)
+            }
         }.flowOn(Dispatchers.IO)
             .onEach {
                 binding.glSurfaceView.setImageBitmap(it)
-                binding.glSurfaceView.setFilter(imageFilter)
             }
             .launchIn(lifecycleScope)
     }
@@ -73,9 +80,9 @@ class OpenGLFilterActivity : AppCompatActivity() {
 
     private fun applyFilter() {
         flow<BaseImageFilter> {
-            BitmapFactory.decodeStream(assets.open("lut/filter_03.png")).let { lutBitmap ->
-                emit(GaussianBlurImageFilter(this@OpenGLFilterActivity, 0))
-            }
+            val filterData = getLutFilterData()[8]
+            val lutBitmaps = filterData.filterLutAssets!!.map { BitmapFactory.decodeStream(assets.open(it)) }
+            emit(TestImageFilter(this@OpenGLFilterActivity, lutBitmaps, fragmentAsset = filterData.filterFragShaderPath))
         }.flowOn(Dispatchers.IO)
             .onEach {
                 Log.d("LUTFilterActivity", "LUT list: $it")

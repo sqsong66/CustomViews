@@ -21,7 +21,6 @@ import com.example.customviews.utils.getCenterFromRect
 import com.example.customviews.utils.getCornersFromRect
 import com.github.chrisbanes.photoview.CustomGestureDetector
 import com.github.chrisbanes.photoview.GestureListenerAdapter
-import com.github.chrisbanes.photoview.OnGestureListener
 import kotlin.math.max
 
 open class ScalableImageView @JvmOverloads constructor(
@@ -40,10 +39,11 @@ open class ScalableImageView @JvmOverloads constructor(
     private var imageInitialCenter: FloatArray? = null
     private var imageInitialCorners: FloatArray? = null
 
+    private var isLimitBounds = true
     protected val showRect = RectF()
-    protected val imageRect = RectF()
-    protected var isScaleGesture = true
+    private val imageRect = RectF()
     protected val suppMatrix = Matrix()
+    protected var isScaleGesture = false
     private val imageTransformCorners = FloatArray(8)
     private val imageTransformCenter = FloatArray(2)
 
@@ -56,8 +56,8 @@ open class ScalableImageView @JvmOverloads constructor(
     }
 
     private val onGestureListener = object : GestureListenerAdapter() {
-        override fun onDrag(x: Float, y: Float, dx: Float, dy: Float, pointerCount: Int) {
-            onViewDrag(x, y, dx, dy, pointerCount)
+        override fun onDrag(x: Float, y: Float, dx: Float, dy: Float, event: MotionEvent) {
+            onViewDrag(x, y, dx, dy, event)
         }
 
         override fun onFling(startX: Float, startY: Float, velocityX: Float, velocityY: Float) {
@@ -84,6 +84,7 @@ open class ScalableImageView @JvmOverloads constructor(
 
     private fun handleAttributes(context: Context, attrs: AttributeSet?) {
         context.obtainStyledAttributes(attrs, R.styleable.ScalableImageView).apply {
+            isLimitBounds = getBoolean(R.styleable.ScalableImageView_siv_isLimitBounds, true)
             val imageRes = getResourceId(R.styleable.ScalableImageView_siv_imageSrc, 0)
             if (imageRes != 0) {
                 viewBitmap = decodeBitmapFromResource(context, imageRes, 512)
@@ -92,7 +93,7 @@ open class ScalableImageView @JvmOverloads constructor(
         }
     }
 
-    protected open fun onViewDrag(x: Float, y: Float, dx: Float, dy: Float, pointerCount: Int) {
+    protected open fun onViewDrag(x: Float, y: Float, dx: Float, dy: Float, event: MotionEvent) {
         suppMatrix.postTranslate(dx, dy)
         checkAndDisplayMatrix()
     }
@@ -152,7 +153,7 @@ open class ScalableImageView @JvmOverloads constructor(
 
     protected open fun onTouchUp(event: MotionEvent) {
         parent.requestDisallowInterceptTouchEvent(false)
-        if (isScaleGesture) {
+        if (isScaleGesture && isLimitBounds) {
             scaleImageToFitFrameRect()
         }
     }
@@ -216,7 +217,7 @@ open class ScalableImageView @JvmOverloads constructor(
     protected fun getDrawMatrix(): Matrix {
         drawMatrix.set(baseMatrix)
         drawMatrix.postConcat(suppMatrix)
-        onBaseImageTransformed(suppMatrix)
+        onBaseImageTransformed(suppMatrix, drawMatrix)
         updateTransformImagePoints(drawMatrix)
         return drawMatrix
     }
@@ -225,10 +226,10 @@ open class ScalableImageView @JvmOverloads constructor(
      * 当基图进行变换时，通知图层，图层基于基图的变换来进行变换的。
      * @param matrix 基图的变换矩阵
      */
-    protected open fun onBaseImageTransformed(matrix: Matrix) {}
+    protected open fun onBaseImageTransformed(matrix: Matrix, drawMatrix: Matrix) {}
 
     private fun checkAndDisplayMatrix(checkBounds: Boolean = true) {
-        if (checkBounds) {
+        if (checkBounds && isLimitBounds) {
             if (checkMatrixBounds()) {
                 getDrawMatrix()
                 invalidate()
@@ -301,13 +302,9 @@ open class ScalableImageView @JvmOverloads constructor(
     }
 
     private inner class FlingRunnable(context: Context) : Runnable {
-        private val mScroller: OverScroller
+        private val mScroller: OverScroller = OverScroller(context)
         private var mCurrentX = 0
         private var mCurrentY = 0
-
-        init {
-            mScroller = OverScroller(context)
-        }
 
         fun cancelFling() {
             mScroller.forceFinished(true)

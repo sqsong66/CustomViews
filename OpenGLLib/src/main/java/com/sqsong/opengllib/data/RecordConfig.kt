@@ -8,5 +8,6 @@ data class RecordConfig(
     val videoPath: String,
     val videoWidth: Int,
     val videoHeight: Int,
+    val audioAssetPath: String,
     val sharedEGLContext: EGLContext? = null
 )

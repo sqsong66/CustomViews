@@ -28,7 +28,7 @@ class MosaicView @JvmOverloads constructor(
 
     private var lastX = 0f
     private var lastY = 0f
-    private var isScaleMode = false
+
     private val mosaicPath = Path()
     private val tempMatrix = Matrix()
     private val cacheMatrix = Matrix()
@@ -63,15 +63,8 @@ class MosaicView @JvmOverloads constructor(
 
     }
 
-    override fun onPointerDown(event: MotionEvent) {
-        if (event.pointerCount > 1) {
-            isScaleMode = true
-        }
-    }
-
     override fun onTouchDown(event: MotionEvent) {
         super.onTouchDown(event)
-        isScaleMode = false
         mapPoints(event.x, event.y).let {
             mosaicPath.reset()
             mosaicPath.moveTo(it[0], it[1])
@@ -82,14 +75,14 @@ class MosaicView @JvmOverloads constructor(
 
     override fun onTouchUp(event: MotionEvent) {
         super.onTouchUp(event)
-        mosaicPathList.add(MosaicPath(Path(mosaicPath), Paint(mosaicPaint)))
+        if (!isScaleGesture) mosaicPathList.add(MosaicPath(Path(mosaicPath), Paint(mosaicPaint)))
         mosaicPath.reset()
         invalidate()
     }
 
-    override fun onViewDrag(x: Float, y: Float, dx: Float, dy: Float, pointerCount: Int) {
-        if (pointerCount > 1 || isScaleMode) {
-            super.onViewDrag(x, y, dx, dy, pointerCount)
+    override fun onViewDrag(x: Float, y: Float, dx: Float, dy: Float, event: MotionEvent) {
+        if (event.pointerCount > 1 || isScaleGesture) {
+            super.onViewDrag(x, y, dx, dy, event)
         } else {
             val start = mapPoints(lastX, lastY)
             val end = mapPoints(x, y)
@@ -122,7 +115,7 @@ class MosaicView @JvmOverloads constructor(
         mosaicBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
     }
 
-    override fun onBaseImageTransformed(matrix: Matrix) {
+    override fun onBaseImageTransformed(matrix: Matrix, drawMatrix: Matrix) {
         mosaicBitmapMatrix.set(cacheMatrix)
         mosaicBitmapMatrix.postConcat(matrix)
         mosaicPaint.strokeWidth = dp2Px<Float>(30) / mosaicBitmapMatrix.matrixScale()

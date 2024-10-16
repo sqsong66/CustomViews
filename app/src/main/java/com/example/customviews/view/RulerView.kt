@@ -212,7 +212,7 @@ class RulerView @JvmOverloads constructor(
             calculateValues(false)
             invalidate()
         } else {
-            Log.d("RulerView", "computeScroll Stop.")
+            // Log.d("RulerView", "computeScroll Stop.")
             if ((currentDistance < 0 || currentDistance > totalDistance) && !isTouched) {
                 isStopScroll = false
                 val startDistance = currentDistance
@@ -247,7 +247,7 @@ class RulerView @JvmOverloads constructor(
                     vibratorHelper.vibrate()
                 }
                 onValueChangeListener?.onValueChange(currentProgress.toFloat(), false)
-                Log.d("RulerView", "currentProgress: $currentProgress, isStop: $isStop")
+                // Log.d("RulerView", "currentProgress: $currentProgress, isStop: $isStop")
             }
         }
     }

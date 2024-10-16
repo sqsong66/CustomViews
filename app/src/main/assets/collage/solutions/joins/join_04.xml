@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution
+    id="join_04"
+    type="join"
+    thumb="images/thumb/thumb_join_04.webp"
+    width="948" >
+    
+    <Picture 
+        id="join_foreground_00"
+        type="foreground"
+        src="images/foreground/fg_17.webp"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="10"
+        left="0" top="0"
+        right="473" bottom="57" />
+
+    <PictureArea
+        id="join_user_set"
+        type="vertical"
+        src=""
+        mask="images/mask/mask_18.webp"
+        backgroundColor="#FF2F2F2F"
+        alpha="255"
+        paddingLeft="0" paddingRight="0"
+        paddingTop="0" paddingBottom="0"
+        spacing="6" />
+
+    <Picture
+        id="join_foreground_01"
+        type="foreground"
+        src="images/foreground/fg_18.webp"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        depth="10"
+        left="0" top="745"
+        right="948" bottom="1237" />
+        
+</Solution>

@@ -3,7 +3,6 @@ package com.sqsong.opengllib
 import android.graphics.Bitmap
 import android.opengl.GLES30
 import android.opengl.GLSurfaceView
-import android.util.Log
 import com.sqsong.opengllib.common.BitmapTexture
 import com.sqsong.opengllib.common.Texture
 import com.sqsong.opengllib.filters.BaseImageFilter
@@ -14,7 +13,7 @@ import javax.microedition.khronos.opengles.GL10
 
 class OpenGLRender(
     private var imageFilter: BaseImageFilter,
-) : GLSurfaceView.Renderer {
+) : GLSurfaceView.Renderer, GLTextureView.Renderer {
 
     private var bgRed = 0f
     private var bgGreen = 0f
@@ -28,8 +27,10 @@ class OpenGLRender(
 
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig?) {
         GLES30.glClearColor(0f, 0f, 0f, 0f)
-        GLES30.glEnable(GLES30.GL_BLEND)
-        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA)
+        /*GLES30.glEnable(GLES30.GL_BLEND)
+        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA)*/
+        GLES30.glDisable(GLES30.GL_BLEND)
+
         imageFilter.ifNeedInit()
         imageBitmap?.let {
             inputTexture = BitmapTexture(it).also { inputTexture ->
@@ -47,6 +48,7 @@ class OpenGLRender(
     }
 
     override fun onDrawFrame(gl: GL10) {
+        GLES30.glClearColor(0f, 0f, 0f, 0f)
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GLES30.GL_DEPTH_BUFFER_BIT)
         runAll(runOnDraw)
         inputTexture?.let { texture ->
@@ -60,6 +62,7 @@ class OpenGLRender(
         runOnDraw {
             inputTexture?.delete()
             inputTexture = null
+
             inputTexture = BitmapTexture(bitmap).also {
                 imageFilter.onInputTextureLoaded(it.textureWidth, it.textureHeight)
             }
@@ -68,21 +71,18 @@ class OpenGLRender(
 
     fun setFilter(filter: BaseImageFilter, progress: Float) {
         runOnDraw {
-            val oldFilter = imageFilter
+            imageFilter.onDestroy()
+            // 应用新滤镜
             this.imageFilter = filter
+            // 初始化新滤镜相关配置
+            imageFilter.ifNeedInit()
+            imageFilter.onViewSizeChanged(viewWidth, viewHeight)
             if (progress != Float.MIN_VALUE) {
                 this.imageFilter.setProgress(progress, 0)
             }
-            oldFilter.onDestroy()
-            imageFilter.ifNeedInit()
-            imageBitmap?.let {
-                inputTexture?.delete()
-                inputTexture = null
-                inputTexture = BitmapTexture(it).also { inputTexture ->
-                    imageFilter.onInputTextureLoaded(inputTexture.textureWidth, inputTexture.textureHeight)
-                }
+            inputTexture?.let {
+                imageFilter.onInputTextureLoaded(it.textureWidth, it.textureHeight)
             }
-            imageFilter.onViewSizeChanged(viewWidth, viewHeight)
         }
     }
 
@@ -107,7 +107,9 @@ class OpenGLRender(
     }
 
     fun setProgress(progress: Float, extraType: Int = 0) {
-        imageFilter.setProgress(progress, extraType)
+        runOnDraw {
+            imageFilter.setProgress(progress, extraType)
+        }
     }
 
     fun getRenderedBitmap(): Bitmap? {

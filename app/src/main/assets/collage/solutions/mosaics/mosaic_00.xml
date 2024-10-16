@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution
+    id="mosaic_00"
+    type="mosaic"
+    width="938" height="1250" >
+
+    <Picture
+        id="mosaic_effects_photo"
+        type="effectPhoto"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="0" top="0"
+        right="938" bottom="1250" />
+
+    <Picture
+        id="mosaic_selector"
+        type="mosaicSelector"
+        fillPolygon="true"
+        alpha="255"
+        ratote="0"
+        left="0" top="0"
+        right="938" bottom="1250" />
+
+</Solution>

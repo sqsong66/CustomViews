@@ -1,8 +1,10 @@
 package com.github.chrisbanes.photoview;
 
+import android.view.MotionEvent;
+
 public class GestureListenerAdapter implements OnGestureListener {
     @Override
-    public void onDrag(float x, float y, float dx, float dy, int pointerCount) {
+    public void onDrag(float x, float y, float dx, float dy, MotionEvent event) {
 
     }
 

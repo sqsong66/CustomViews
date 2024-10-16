@@ -30,9 +30,7 @@ class GaussianBlurImageFilter(
         val height = horizontalBlurFbo?.height ?: 0
         GLES30.glViewport(0, 0, width, height)
         fboProgram?.getUniformLocation("uTexture")?.let {
-            GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
-            inputTexture.bindTexture()
-            GLES30.glUniform1i(it, 0)
+            inputTexture.bindTexture(it, 1)
         }
         fboProgram?.let { program ->
             setBlurParams(program, isHorizontal = true)
